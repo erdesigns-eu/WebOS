@@ -4,6 +4,8 @@
  */
 
 import { WebOS } from "./Shell/WebOS";
+import { Desktop } from "./Shell/Desktop";
+import { Taskbar } from "./Shell/Taskbar";
 
 /**
  * The register function
@@ -14,6 +16,10 @@ import { WebOS } from "./Shell/WebOS";
 const registerWebOSElements = (): void => {
   // Register the WebOS custom element
   customElements.define(WebOS.elementName, WebOS);
+  // Register the Desktop custom element
+  customElements.define(Desktop.elementName, Desktop);
+  // Register the Taskbar custom element
+  customElements.define(Taskbar.elementName, Taskbar);
 };
 
 // Export the register function

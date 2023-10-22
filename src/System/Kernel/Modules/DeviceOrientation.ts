@@ -51,7 +51,7 @@ class DeviceOrientation extends KernelModule {
    * Ensures that the dependencies are available
    * @throws {KernelModuleError} If the dependencies are not available
    */
-  static ensureDependencies(): Promise<void> {
+  ensureDependencies(): Promise<void> {
     return new Promise((resolve, reject) => {
       // Check if the device orientation API is available
       const hasDeviceOrientation = window && window.DeviceOrientationEvent;

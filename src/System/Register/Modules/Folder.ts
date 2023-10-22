@@ -236,7 +236,7 @@ class RegisterFolder {
 
     // Make sure the folder is a folder
     // @ts-expect-error
-    if (this.#data[name].type !== "folder") {
+    if (!(this.#data[name] instanceof RegisterFolder)) {
       throw new RegisterFolderError("The folder is not a folder!");
     }
 
@@ -315,7 +315,7 @@ class RegisterFolder {
    */
   get folders() : string[] {
     // @ts-expect-error
-    return this.keys.filter(key => this.#data[key].type === "folder");
+    return this.keys.filter(key => this.#data[key] instanceof RegisterFolder);
   }
 
   /**
@@ -324,7 +324,7 @@ class RegisterFolder {
    */
   get records() : string[] {
     // @ts-expect-error
-    return this.keys.filter(key => this.#data[key].type !== "folder");
+    return this.keys.filter(key => this.#data[key] instanceof RegisterRecord);
   }
 
   /**

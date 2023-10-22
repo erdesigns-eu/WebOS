@@ -9,6 +9,10 @@ import { PermissionManager, permissionRequestCallbackFunction, defaultPermission
 import { RegisterManager, RegisterRecordObject } from "./Register/Manager";
 import { WindowManager } from "./Window/Manager";
 
+import { Screen } from "./Utilities/Screen";
+import { Utility } from "./Utilities/Utility";
+import { Shell } from "./Utilities/Shell";
+
 /**
  * The SystemManagerError class
  * @class
@@ -37,6 +41,10 @@ class SystemManager extends EventTarget {
   #permission : PermissionManager;  // The permission manager of the system
   #register   : RegisterManager;    // The register manager of the system
   #window     : WindowManager;      // The window manager of the system
+
+  #screen     : Screen;             // The screen of the system
+  #utility    : Utility;            // The utility of the system
+  #shell      : Shell;              // The shell of the system
 
   /**
    * Creates a new SystemManager instance
@@ -69,6 +77,11 @@ class SystemManager extends EventTarget {
     this.#permission  = new PermissionManager(permissionCallback);
     this.#register    = new RegisterManager(registerRoot);
     this.#window      = new WindowManager();
+
+    // Instantiate the Screen and Utility
+    this.#screen      = new Screen();
+    this.#utility     = Utility;
+    this.#shell       = Shell;
 
     // Add the system manager to the global scope
     Object.defineProperty(window, "system", {
@@ -151,6 +164,30 @@ class SystemManager extends EventTarget {
    */
   get window(): WindowManager {
     return this.#window;
+  }
+
+  /**
+   * Returns the Screen Utility class of the system
+   * @readonly
+   */
+  get screen(): Screen {
+    return this.#screen;
+  }
+
+  /**
+   * Returns the Utility class of the system
+   * @readonly
+   */
+  get utility(): Utility {
+    return this.#utility;
+  }
+
+  /**
+   * Returns the Shell Utility class of the system
+   * @readonly
+   */
+  get shell(): Shell {
+    return this.#shell;
   }
 
 }

@@ -130,6 +130,14 @@ class Kernel extends EventTarget {
   }
 
   /**
+   * Checks if the kernel is instantiated
+   * @readonly
+   */
+  static get kernelIsInstantiated(): boolean {
+    return !!this.#instance;
+  }
+
+  /**
    * Registers a kernel module
    * @param {KernelModule} module The module to register
    * @throws {KernelModuleTypeError} If the module is not an instance of KernelModule
@@ -180,7 +188,7 @@ class Kernel extends EventTarget {
           // Resolve the promise
           resolve();
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           // Log the error
           this.#logger.warn(`[registerModule] Module ${module.name} failed to enure dependencies!`);
           // Add the module to the list of registered modules and mark it as unavailable
@@ -219,12 +227,7 @@ class Kernel extends EventTarget {
    * @param moduleName The name of the module to check
    */
   checkModuleIsRegistered(moduleName: string): boolean {
-    // Check if the module is registered
-    const key = this.#moduleNames[moduleName];
-    // Log the module registration check
-    this.#logger.debug(`[checkModuleIsRegistered] Module ${moduleName} is ${key ? "" : "not "}registered`);
-    // Return the registered state of the module
-    return !!key;
+    return moduleName in this.#moduleNames;
   }
 
   /**
@@ -245,8 +248,6 @@ class Kernel extends EventTarget {
     const key = this.#moduleNames[moduleName];
     // Get the module from WeakMap
     const module = this.#modules.get(key);
-    // Log the module availability check
-    this.#logger.debug(`[checkModuleIsAvailable] Module ${moduleName} is ${module?.available ? "" : "not "}available`);
 
     // Return the available state of the module
     return !!module?.available;
@@ -296,7 +297,7 @@ class Kernel extends EventTarget {
     }
 
     // Check if the module is available
-    if (this.checkModuleIsAvailable(moduleName)) {
+    if (!this.checkModuleIsAvailable(moduleName)) {
       // Log the error
       this.#logger.error(`[callModuleFunction] Module ${moduleName} is not available!`);
       // Throw the error
@@ -329,6 +330,90 @@ class Kernel extends EventTarget {
       this.#logger.error(`[callModuleFunction] Function ${functionName} on module ${moduleName} failed with error: ${error}`);
       // Throw the error
       throw new KernelModuleError(`Function ${functionName} on module ${moduleName} failed! [${error}]`);
+    }
+  }
+
+  /**
+   * Gets a value from a registered module based on the module name
+   * @param moduleName The name of the module
+   */
+  getModuleValue(moduleName: string, valueName: string): any {
+    // Check if the module is registered
+    if (!this.checkModuleIsRegistered(moduleName)) {
+      // Log the error
+      this.#logger.error(`[getModuleValue] Module ${moduleName} is not registered!`);
+      // Throw the error
+      throw new KernelModuleError(`Module ${moduleName} is not registered!`);
+    }
+
+    // Check if the module is available
+    if (!this.checkModuleIsAvailable(moduleName)) {
+      // Log the error
+      this.#logger.error(`[getModuleValue] Module ${moduleName} is not available!`);
+      // Throw the error
+      throw new KernelModuleError(`Module ${moduleName} is not available!`);
+    }
+
+    // Get the key for the module
+    const key = this.#moduleNames[moduleName];
+    // Get the module from WeakMap
+    const module = this.#modules.get(key);
+
+    // Check if the value is available on the module
+    // @ts-expect-error
+    if (typeof module?.module[valueName] === "undefined") {
+      // Log the error
+      this.#logger.error(`[getModuleValue] Value ${valueName} is not available on module ${moduleName}!`);
+      // Throw the error
+      throw new KernelModuleError(`Value ${valueName} is not available on module ${moduleName}`);
+    }
+
+    // Return the value
+    // @ts-expect-error
+    return module?.module[valueName];
+  }
+
+  /**
+   * Sets a value on a registered module based on the module name
+   * @param moduleName The name of the module
+   */
+  setModuleValue(moduleName: string, valueName: string, value: any): void {
+    // Check if the module is registered
+    if (!this.checkModuleIsRegistered(moduleName)) {
+      // Log the error
+      this.#logger.error(`[setModuleValue] Module ${moduleName} is not registered!`);
+      // Throw the error
+      throw new KernelModuleError(`Module ${moduleName} is not registered!`);
+    }
+
+    // Check if the module is available
+    if (!this.checkModuleIsAvailable(moduleName)) {
+      // Log the error
+      this.#logger.error(`[setModuleValue] Module ${moduleName} is not available!`);
+      // Throw the error
+      throw new KernelModuleError(`Module ${moduleName} is not available!`);
+    }
+
+    // Get the key for the module
+    const key = this.#moduleNames[moduleName];
+    // Get the module from WeakMap
+    const module = this.#modules.get(key);
+
+    // Check if the value is available on the module
+    // @ts-expect-error
+    if (typeof module?.module[valueName] === "undefined") {
+      // Log the error
+      this.#logger.error(`[setModuleValue] Value ${valueName} is not available on module ${moduleName}!`);
+      // Throw the error
+      throw new KernelModuleError(`Value ${valueName} is not available on module ${moduleName}`);
+    }
+
+    // Set the value on the module
+    if (module && module.module && valueName) {
+      // Log the value set
+      this.#logger.debug(`[setModuleValue] Setting value ${valueName} on module ${moduleName} to ${value}`);
+      // @ts-expect-error
+      module.module[valueName] = value;
     }
   }
 

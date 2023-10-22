@@ -4,7 +4,8 @@
  * -------------------------------------------------------------
  */
 web-os {
-  background-color: transparent;
+  display: flex;
+  flex-direction: column;
   contain: strict;
   height: 100%;
   inset: 0px;
@@ -22,5 +23,6 @@ web-os {
   outline: 0px;
   padding: 0px;
   text-rendering: optimizelegibility;
+  -webkit-user-select: none;
   user-select: none;
 }

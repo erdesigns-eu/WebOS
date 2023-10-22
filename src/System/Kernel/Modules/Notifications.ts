@@ -43,7 +43,7 @@ class Notifications extends KernelModule {
    * Ensures that the dependencies are available
    * @throws {KernelModuleError} If the dependencies are not available
    */
-  static ensureDependencies(): Promise<void> {
+  ensureDependencies(): Promise<void> {
     return new Promise((resolve, reject) => {
       if (window && window.Notification) {
         resolve();

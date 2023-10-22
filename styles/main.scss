@@ -2,3 +2,10 @@
 @import "./shell/WebOS.scss";
 @import "./shell/Desktop.scss";
 @import "./shell/Taskbar.scss";
+
+html {
+  height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+}

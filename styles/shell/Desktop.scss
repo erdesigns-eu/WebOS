@@ -3,7 +3,6 @@
  * The desktop is the main area of the web os. It is where the user can place icons and windows.
  * ---------------------------------------------------------------------------------------------
  */
-.web-os-desktop {
-  height: 100%;
-  width: 100%;
+web-os-desktop {
+  flex: 1;
 }

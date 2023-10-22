@@ -28,7 +28,7 @@ class Gamepads extends KernelModule {
   /**
    * Creates a new Gamepads instance
    */
-  constructor(options: { interval: number, autoScan?: boolean }) {
+  constructor(options?: { interval?: number, autoScan?: boolean }) {
     // Call the super constructor
     super(module.name, module.version, module.date, module.author);
     // Set the events that need to be registered for the gamepad API
@@ -58,7 +58,7 @@ class Gamepads extends KernelModule {
     // Check if auto scan is enabled
     if (options.autoScan === true) {
       // Start scanning for gamepads every interval milliseconds
-      this.autoScan(options.interval);
+      this.autoScan(options.interval || 500);
     }
     // Set the module as ready
     this.setReady();
@@ -68,7 +68,7 @@ class Gamepads extends KernelModule {
    * Ensures that the dependencies are available
    * @throws {KernelModuleError} If the dependencies are not available
    */
-  static ensureDependencies(): Promise<void> {
+  ensureDependencies(): Promise<void> {
     return new Promise((resolve, reject) => {
       if (window && window.GamepadEvent) {
         resolve();

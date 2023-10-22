@@ -107,11 +107,12 @@ class KernelModule extends EventTarget {
    * @param message The message to log 
    */
   log(logLevel: logLevel, message: string): void {
-    // Get the kernel instance
-    const kernel = Kernel.getInstance();
-    // Log the message using the kernel logger
-    kernel.logger.log(logLevel, message);
-
+    if (Kernel.kernelIsInstantiated) {
+      // Get the kernel instance
+      const kernel = Kernel.getInstance();
+      // Log the message using the kernel logger
+      kernel.logger.log(logLevel, message);
+    }
     // Dispatch the log event
     this.dispatchEvent(new CustomEvent("log", { detail: { logLevel, message } }));
   }

@@ -121,7 +121,7 @@ class Document extends KernelModule {
   /**
    * Ensures that the dependencies are available
    */
-  static ensureDependencies(): Promise<void> {
+  ensureDependencies(): Promise<void> {
     return new Promise((resolve) => {
       // Resolve the promise
       resolve();
@@ -398,6 +398,30 @@ class Document extends KernelModule {
     }
     // Set the title
     document.title = value;
+  }
+
+  /**
+   * Returns the icon of the document
+   */
+  get icon(): string {
+    return document.querySelector("link[rel='icon']")?.getAttribute("href") || "";
+  }
+
+  /**
+   * Sets the icon of the document
+   * @param value The value to set the icon to
+   * @throws {KernelModuleError} Thrown when the value is not a string
+   */
+  set icon(value: string) {
+    // Check if the value is not a string
+    if (typeof value !== "string") {
+      throw new KernelModuleError("The icon value must be a string");
+    }
+    // Set the icon
+    const iconElement = document.querySelector("link[rel='icon']");
+    if (iconElement) {
+      iconElement.setAttribute("href", value);
+    }
   }
 
   /**
