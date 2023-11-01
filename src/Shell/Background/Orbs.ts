@@ -3,7 +3,7 @@
  * - v1.0.0 (2023-10-22): Initial release
  */
 
-import { BackgroundAnimation } from "./Animation";
+import { Background } from "./Index";
 
 const defaultOptions = {
   orbs            : 150,                  // The number of orbs
@@ -79,18 +79,18 @@ class Orb {
 }
 
 /**
- * The Orbs BackgroundAnimation class
+ * The Orbs Background class
  * @class Orbs
  * @description The class that represents the Orbs background animation
- * @extends BackgroundAnimation
+ * @extends Background
  */
-class Orbs extends BackgroundAnimation {
+class Orbs extends Background {
 
   #options : OrbsOptions = defaultOptions; // The options for the animation
   #orbs    : Orb[]        = [];            // The orbs array
 
   /**
-   * Creates a new BackgroundAnimation instance
+   * Creates a new Background instance
    * @param canvas The canvas element
    * @param context The canvas context
    * @constructor 
@@ -103,7 +103,7 @@ class Orbs extends BackgroundAnimation {
   }
 
   /**
-   * Draws the animation
+   * Starts the animation
    * @override
    */
   start(): void {
@@ -159,8 +159,6 @@ class Orbs extends BackgroundAnimation {
    * @override
    */
   setOptions(options: any): void {
-    // Call the super method
-    super.setOptions(options);
     // Set the options
     this.#options = { ...defaultOptions, ...options };
     // Restart the animation if it's active 

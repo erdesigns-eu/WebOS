@@ -1,0 +1,27 @@
+/**
+ * These styles are applied to all HTML elements.
+ * ----------------------------------------------
+ */
+*, ::before, ::after {
+  border: 0px;
+  box-sizing: border-box;
+  cursor: default;
+  font-variant-numeric: tabular-nums;
+  margin: 0px;
+  outline: 0px;
+  padding: 0px;
+  text-rendering: optimizelegibility;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/**
+ * These styles are applied to the main HTML element.
+ * --------------------------------------------------
+ */
+html {
+  height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+}

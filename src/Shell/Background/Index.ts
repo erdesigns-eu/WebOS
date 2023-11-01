@@ -4,17 +4,17 @@
  */
 
 /**
- * The BackgroundAnimation class
- * @class BackgroundAnimation
- * @description The class that represents a background animation
+ * The Background class
+ * @class Background
+ * @description The class that represents a background
  */
-class BackgroundAnimation {
+abstract class Background {
   #canvas  : HTMLCanvasElement|null         = null; // The canvas element
   #context : CanvasRenderingContext2D|null  = null; // The canvas context
   #active  : boolean                        = false; // Whether the animation is active or not
 
   /**
-   * Creates a new BackgroundAnimation instance
+   * Creates a new Background instance
    * @param canvas The canvas element
    * @param context The canvas context
    * @constructor 
@@ -45,28 +45,19 @@ class BackgroundAnimation {
   /**
    * Draws the animation
    */
-  draw(): void {
-    // TODO: Implement
-  }
+  abstract draw(): void;
 
   /**
    * Sets the options for the animation
    * @param options The options to set
    */
-  setOptions(options: any): void {
-    if (options) {
-      // TODO: Implement
-    }
-  }
+  abstract setOptions(options: any): void;
 
   /**
    * Gets the options for the animation
    * @returns The options for the animation
    */
-  getOptions(): any {
-    // TODO: Implement
-    return {};
-  }
+  abstract getOptions(): any;
 
   /**
    * Gets whether the animation is active or not
@@ -93,5 +84,5 @@ class BackgroundAnimation {
   }
 }
 
-// Export the BackgroundAnimation class
-export { BackgroundAnimation };
+// Export the Background class
+export { Background };

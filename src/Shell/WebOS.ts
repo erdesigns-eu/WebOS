@@ -6,7 +6,7 @@
 import { SystemManager } from "../System/System";
 import { Kernel } from "../System/Kernel/Kernel";
 
-import { BackgroundAnimation } from "./Background/Animation";
+import { Background } from "./Background/Index";
 import { Matrix } from "./Background/Matrix";
 import { Mesh } from "./Background/Mesh";
 import { Orbs } from "./Background/Orbs";
@@ -32,9 +32,8 @@ class WebOSError extends Error {
  */
 class WebOS extends HTMLElement {
 
-  #backgroundElement : HTMLElement|null         = null;   // The background element
-  #animationElement  : HTMLCanvasElement|null   = null;   // The animation element
-  #animation         : BackgroundAnimation|null = null;   // The animation instance
+  #backgroundElement : HTMLCanvasElement|null   = null;   // The background element
+  #animation         : Background|null          = null;   // The animation instance
   #resizeObserver    : ResizeObserver|null      = null;   // The resize observer
 
   static elementName = "web-os";
@@ -63,38 +62,26 @@ class WebOS extends HTMLElement {
     // Create the shadow DOM
     const shadowRoot = this.attachShadow({ mode: "closed" });
     // Create the background element
-    this.#backgroundElement = document.createElement("div");
-    // Set the background element's styles
-    this.#backgroundElement.style.transition          = "background-color 0.5s ease-in-out, background-image 0.5s ease-in-out";
+    this.#backgroundElement                           = document.createElement("canvas");
+    this.#backgroundElement.width                     = innerWidth;
+    this.#backgroundElement.height                    = innerHeight;
+    // Set the background element"s styles
     this.#backgroundElement.style.position            = "absolute";
     this.#backgroundElement.style.top                 = "0";
     this.#backgroundElement.style.left                = "0";
-    this.#backgroundElement.style.right               = "0";
-    this.#backgroundElement.style.bottom              = "0";
-    this.#backgroundElement.style.backgroundColor     = this._backgroundColor;
-    this.#backgroundElement.style.backgroundImage     = `url(${this._backgroundImage})`;
-    this.#backgroundElement.style.backgroundSize      = this._backgroundSize;
-    this.#backgroundElement.style.backgroundPosition  = this._backgroundPosition;
+    this.#backgroundElement.style.width               = "100%";
+    this.#backgroundElement.style.height              = "100%";
     this.#backgroundElement.style.zIndex              = "-100";
-    // Add the background element to the shadow DOM
-    shadowRoot.appendChild(this.#backgroundElement);
-    // Create the animation element
-    this.#animationElement                            = document.createElement("canvas");
-    this.#animationElement.width                      = innerWidth;
-    this.#animationElement.height                     = innerHeight;
-    // Set the animation element's styles
-    this.#animationElement.style.position             = "absolute";
-    this.#animationElement.style.top                  = "0";
-    this.#animationElement.style.left                 = "0";
-    this.#animationElement.style.width                = "100%";
-    this.#animationElement.style.height               = "100%";
-    this.#animationElement.style.zIndex               = "-99";
-    // Add a resize observer to the animation element to resize it accordingly when the window is resized
+    this.#backgroundElement.style.backgroundColor     = this._backgroundColor;
+    this.#backgroundElement.style.backgroundSize      = this._backgroundSize;
+    this.#backgroundElement.style.backgroundImage     = this._backgroundImage.length ? `url(${this._backgroundImage})` : "";
+    this.#backgroundElement.style.backgroundPosition  = this._backgroundPosition;
+    // Add a resize observer to the background element to resize it accordingly when the window is resized
     // @ts-expect-error
     this.#resizeObserver = new ResizeObserver(this.system.utility.debounce(this.#handleResize.bind(this), this._backgroundAnimationDebounce));
     this.#resizeObserver.observe(this);
-    // Add the animation element to the shadow DOM
-    shadowRoot.appendChild(this.#animationElement);
+    // Add the background element to the shadow DOM
+    shadowRoot.appendChild(this.#backgroundElement);
     // Create a default slot element
     const slotElement = document.createElement("slot");
     // Add the slot element to the shadow DOM
@@ -107,7 +94,7 @@ class WebOS extends HTMLElement {
    * @description The observedAttributes method returns an array of attribute names to observe
    */
   static get observedAttributes() {
-    return ['background-type', 'background-color', 'background-image', 'background-size', 'background-position', 'background-animation', 'background-animation-options', 'background-animation-debounce', 'title', 'icon'];
+    return ["background-type", "background-color", "background-image", "background-size", "background-position", "background-animation", "background-animation-options", "background-animation-debounce", "title", "icon"];
   }
 
   /**
@@ -118,8 +105,8 @@ class WebOS extends HTMLElement {
   #handleResize(entries: ResizeObserverEntry[]) {
     if (entries.length) {
       const { width, height } = entries[0].contentRect;
-      this.#animationElement!.width = width;
-      this.#animationElement!.height = height;
+      this.#backgroundElement!.width = width;
+      this.#backgroundElement!.height = height;
       if (this.#animation) {
         this.#animation.stop();
         this.#animation.start();
@@ -172,13 +159,13 @@ class WebOS extends HTMLElement {
     }
     switch (name) {
       case "matrix":
-        this.#animation = new Matrix(this.#animationElement!, this.#animationElement!.getContext("2d")!);
+        this.#animation = new Matrix(this.#backgroundElement!, this.#backgroundElement!.getContext("2d")!);
         break;
       case "mesh":
-        this.#animation = new Mesh(this.#animationElement!, this.#animationElement!.getContext("2d")!);
+        this.#animation = new Mesh(this.#backgroundElement!, this.#backgroundElement!.getContext("2d")!);
         break;
       case "orbs":
-        this.#animation = new Orbs(this.#animationElement!, this.#animationElement!.getContext("2d")!);
+        this.#animation = new Orbs(this.#backgroundElement!, this.#backgroundElement!.getContext("2d")!);
         break;
       default:
         throw new WebOSError(`Invalid background animation: ${name}`);
@@ -430,7 +417,7 @@ class WebOS extends HTMLElement {
    * Animation getter
    * @getter
    */
-  get animation(): BackgroundAnimation|null {
+  get animation(): Background|null {
     return this.#animation;
   }
 

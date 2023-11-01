@@ -3,7 +3,7 @@
  * - v1.0.0 (2023-10-22): Initial release
  */
 
-import { BackgroundAnimation } from "./Animation";
+import { Background } from "./Index";
 
 /**
  * Default options for the Matrix animation
@@ -27,12 +27,12 @@ const defaultOptions = {
 type MatrixOptions = typeof defaultOptions;
 
 /**
- * The Matrix BackgroundAnimation class
+ * The Matrix Background class
  * @class Matrix
  * @description The class that represents the Matrix background animation
- * @extends BackgroundAnimation
+ * @extends Background
  */
-class Matrix extends BackgroundAnimation {
+class Matrix extends Background {
 
   #options    : MatrixOptions       = defaultOptions; // The options for the animation
   #interval   : NodeJS.Timeout|null = null;           // The interval ID/Handle
@@ -41,7 +41,7 @@ class Matrix extends BackgroundAnimation {
   #drops      : number[]            = [];             // The drops array
 
   /**
-   * Creates a new BackgroundAnimation instance
+   * Creates a new Background instance
    * @param canvas The canvas element
    * @param context The canvas context
    * @constructor 
@@ -54,7 +54,7 @@ class Matrix extends BackgroundAnimation {
   }
 
   /**
-   * Draws the animation
+   * Starts the animation
    * @override
    */
   start(): void {
@@ -74,6 +74,9 @@ class Matrix extends BackgroundAnimation {
     // @ts-expect-error
     this.context!.fillStyle = window.system.utility.colorToRGBA(this.#options.backgroundColor, 1);
     this.context!.fillRect(0, 0, this.canvas!.width, this.canvas!.height);
+    // Update the background color to be transparent (to make the animation look better)
+    // @ts-expect-error
+    this.#options.backgroundColor = window.system.utility.colorToRGBA(this.#options.backgroundColor, 0.05);
     // Set the interval
     this.#interval = setInterval(() => this.draw(), 1000 / this.#options.fps);
   }
@@ -124,8 +127,6 @@ class Matrix extends BackgroundAnimation {
    * @override
    */
   setOptions(options: any): void {
-    // Call the super method
-    super.setOptions(options);
     // Set the options
     this.#options = { ...defaultOptions, ...options };
     // Restart the animation if it's active 

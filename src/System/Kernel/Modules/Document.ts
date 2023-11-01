@@ -417,11 +417,17 @@ class Document extends KernelModule {
     if (typeof value !== "string") {
       throw new KernelModuleError("The icon value must be a string");
     }
-    // Set the icon
-    const iconElement = document.querySelector("link[rel='icon']");
-    if (iconElement) {
-      iconElement.setAttribute("href", value);
-    }
+    // Create the link element
+    const link = document.createElement('link');
+    // Remove the old link elements
+    const oldLinks = document.querySelectorAll('link[rel="shortcut icon"]');
+    oldLinks.forEach((e) => e.parentNode!.removeChild(e));
+    // Set the attributes
+    link.id   = 'dynamic-favicon';  // Identifier
+    link.rel  = 'shortcut icon';    // Rel
+    link.href = value;              // URL
+    // Append the link element to the document head
+    document.head.appendChild(link);
   }
 
   /**

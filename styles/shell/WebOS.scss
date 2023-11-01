@@ -13,16 +13,3 @@ web-os {
   position: fixed;
   width: 100vw;
 }
-
-*, ::before, ::after {
-  border: 0px;
-  box-sizing: border-box;
-  cursor: default;
-  font-variant-numeric: tabular-nums;
-  margin: 0px;
-  outline: 0px;
-  padding: 0px;
-  text-rendering: optimizelegibility;
-  -webkit-user-select: none;
-  user-select: none;
-}

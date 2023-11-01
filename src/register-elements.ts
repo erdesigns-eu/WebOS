@@ -6,6 +6,9 @@
 import { WebOS } from "./Shell/WebOS";
 import { Desktop } from "./Shell/Desktop";
 import { Taskbar } from "./Shell/Taskbar";
+import { Brightness } from "./Shell/Overlay/Brightness";
+import { Nightlight } from "./Shell/Overlay/Nightlight";
+import { ScreenSaver } from "./Shell/Screensaver";
 
 /**
  * The register function
@@ -20,6 +23,12 @@ const registerWebOSElements = (): void => {
   customElements.define(Desktop.elementName, Desktop);
   // Register the Taskbar custom element
   customElements.define(Taskbar.elementName, Taskbar);
+  // Register the Brightness custom element
+  customElements.define(Brightness.elementName, Brightness);
+  // Register the Nightlight custom element
+  customElements.define(Nightlight.elementName, Nightlight);
+  // Register the ScreenSaver custom element
+  customElements.define(ScreenSaver.elementName, ScreenSaver);
 };
 
 // Export the register function

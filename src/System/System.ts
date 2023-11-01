@@ -8,6 +8,9 @@ import { KernelModule } from "./Kernel/KernelModule";
 import { PermissionManager, permissionRequestCallbackFunction, defaultPermissionRequestCallback } from "./Permission/Manager";
 import { RegisterManager, RegisterRecordObject } from "./Register/Manager";
 import { WindowManager } from "./Window/Manager";
+import { FilesystemManager } from "./Filesystem/Manager";
+import { ThemeManagerTheme } from "./Theme/Modules/Theme";
+import { ThemeManager } from "./Theme/Manager";
 
 import { Screen } from "./Utilities/Screen";
 import { Utility } from "./Utilities/Utility";
@@ -41,6 +44,8 @@ class SystemManager extends EventTarget {
   #permission : PermissionManager;  // The permission manager of the system
   #register   : RegisterManager;    // The register manager of the system
   #window     : WindowManager;      // The window manager of the system
+  #filesystem : FilesystemManager;  // The filesystem manager of the system
+  #theme      : ThemeManager;       // The theme manager of the system
 
   #screen     : Screen;             // The screen of the system
   #utility    : Utility;            // The utility of the system
@@ -51,11 +56,12 @@ class SystemManager extends EventTarget {
    * @param kernelModules The kernel modules to load
    * @param permissionCallback The permission callback function
    * @param registerRoot The register root
+   * @param themes The themes to load
    * @throws {PermissionManagerError} If the PermissionManager is already instantiated
    * @throws {PermissionManagerError} If the PermissionManager class is extended instead of instantiated
    * @fires SystemManager#ready
    */
-  constructor(kernelModules: Array<KernelModule> = [], permissionCallback: permissionRequestCallbackFunction = defaultPermissionRequestCallback, registerRoot: Array<RegisterRecordObject> = []) {
+  constructor(kernelModules: Array<KernelModule> = [], permissionCallback: permissionRequestCallbackFunction = defaultPermissionRequestCallback, registerRoot: Array<RegisterRecordObject> = [], themes: ThemeManagerTheme[] = []) {
     // Call the super constructor
     super();
 
@@ -72,11 +78,13 @@ class SystemManager extends EventTarget {
       throw new SystemManagerError("Cannot extend SystemManager class, must instantiate it instead of extending it!");
     }
 
-    // Instatiate the Kernel, PermissionManager, RegisterManager and WindowManager
+    // Instatiate the Kernel, PermissionManager, RegisterManager, WindowManager and FilesystemManager
     this.#kernel      = new Kernel(kernelModules);
     this.#permission  = new PermissionManager(permissionCallback);
     this.#register    = new RegisterManager(registerRoot);
     this.#window      = new WindowManager();
+    this.#filesystem  = new FilesystemManager();
+    this.#theme       = new ThemeManager(themes);
 
     // Instantiate the Screen and Utility
     this.#screen      = new Screen();
@@ -104,12 +112,13 @@ class SystemManager extends EventTarget {
    * @param kernelModules The kernel modules to load
    * @param permissionCallback The permission callback function
    * @param registerRoot The register root
+   * @param themes The themes to load
    */
-  static getInstance(kernelModules: Array<KernelModule> = [], permissionCallback: permissionRequestCallbackFunction = defaultPermissionRequestCallback, registerRoot: Array<RegisterRecordObject> = []): SystemManager {
+  static getInstance(kernelModules: Array<KernelModule> = [], permissionCallback: permissionRequestCallbackFunction = defaultPermissionRequestCallback, registerRoot: Array<RegisterRecordObject> = [], themes: ThemeManagerTheme[] = []): SystemManager {
     // Check if the instance is already instantiated
     if (!SystemManager.#instance) {
       // Instantiate the SystemManager
-      SystemManager.#instance = new SystemManager(kernelModules, permissionCallback, registerRoot);
+      SystemManager.#instance = new SystemManager(kernelModules, permissionCallback, registerRoot, themes);
     }
     // Return the instance of the SystemManager
     return SystemManager.#instance;
@@ -120,10 +129,11 @@ class SystemManager extends EventTarget {
    * @param kernelModules The kernel modules to load
    * @param permissionCallback The permission callback function
    * @param registerRoot The register root
+   * @param themes The themes to load
    */
-  static instantiate(kernelModules: Array<KernelModule> = [], permissionCallback: permissionRequestCallbackFunction = defaultPermissionRequestCallback, registerRoot: Array<RegisterRecordObject> = []): void {
+  static instantiate(kernelModules: Array<KernelModule> = [], permissionCallback: permissionRequestCallbackFunction = defaultPermissionRequestCallback, registerRoot: Array<RegisterRecordObject> = [], themes: ThemeManagerTheme[] = []): void {
     // Instantiate the SystemManager
-    SystemManager.getInstance(kernelModules, permissionCallback, registerRoot);
+    SystemManager.getInstance(kernelModules, permissionCallback, registerRoot, themes);
   }
 
   /**
@@ -164,6 +174,22 @@ class SystemManager extends EventTarget {
    */
   get window(): WindowManager {
     return this.#window;
+  }
+
+  /**
+   * Returns the filesystem manager of the system
+   * @readonly
+   */
+  get filesystem(): FilesystemManager {
+    return this.#filesystem;
+  }
+
+  /**
+   * Returns the theme manager of the system
+   * @readonly
+   */
+  get theme(): ThemeManager {
+    return this.#theme;
   }
 
   /**

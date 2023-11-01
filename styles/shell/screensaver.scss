@@ -1,0 +1,15 @@
+/**
+ * Screensaver
+ * This is the screensaver component that is shown when the user is idle.
+ * ----------------------------------------------------------------------
+ */
+web-os-screensaver {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999999;
+  pointer-events: none;
+  background: transparent;
+}

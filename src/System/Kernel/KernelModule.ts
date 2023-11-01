@@ -56,7 +56,7 @@ interface KernelModuleInformation {
  * @property date The date of the module
  * @property author The author of the module
  */
-class KernelModule extends EventTarget {
+abstract class KernelModule extends EventTarget {
   #name     : string = "";
   #version  : string = "";
   #date     : string = "";

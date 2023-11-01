@@ -3,7 +3,7 @@
  * - v1.0.0 (2023-10-22): Initial release
  */
 
-import { BackgroundAnimation } from "./Animation";
+import { Background } from "./Index";
 
 /**
  * Default options for the Mesh animation
@@ -127,19 +127,19 @@ class Particle {
 }
 
 /**
- * The Mesh BackgroundAnimation class
+ * The Mesh Background class
  * @class Mesh
  * @description The class that represents the Mesh background animation
- * @extends BackgroundAnimation
+ * @extends Background
  */
-class Mesh extends BackgroundAnimation {
+class Mesh extends Background {
 
   #options    : MeshOptions         = defaultOptions; // The options for the animation
   #particles  : any[]               = [];             // The particles
   #rgb        : number[]            = [];             // The rgb values of the color
 
   /**
-   * Creates a new BackgroundAnimation instance
+   * Creates a new Background instance
    * @param canvas The canvas element
    * @param context The canvas context
    * @constructor 
@@ -160,7 +160,7 @@ class Mesh extends BackgroundAnimation {
   }
 
   /**
-   * Draws the animation
+   * Starts the animation
    * @override
    */
   start(): void {
@@ -238,8 +238,6 @@ class Mesh extends BackgroundAnimation {
    * @override
    */
   setOptions(options: any): void {
-    // Call the super method
-    super.setOptions(options);
     // Set the options
     this.#options = { ...defaultOptions, ...options };
     // Set the rgb values
