@@ -172,7 +172,7 @@ class Kernel extends EventTarget {
           const customEvent = e as CustomEvent;
           // Dispatch the event
           this.dispatchEvent(new CustomEvent(event, { detail: customEvent.detail }));
-        });
+        }, { passive: true });
       }
     };
 

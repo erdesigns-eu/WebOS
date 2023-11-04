@@ -23,7 +23,6 @@ export const debounce = (callback: Function, delay: number) => {
  * @param workerFunction The function to create the worker from
  */
 export const createWorker = (workerFunction: Function) => {
-  console.log(workerFunction.toString());
   const workerBlob = new Blob([`(${workerFunction.toString()})()`], {
     type: "application/javascript",
   });

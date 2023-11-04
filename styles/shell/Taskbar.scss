@@ -4,5 +4,215 @@
  * ------------------------------------------------------------------------------------------------------------------
  */
 web-os-taskbar {
-  height: 40px;
+  contain: size layout;
+
+  &[size="small"] {
+    --taskbar-height: var(--taskbar-height-small);
+  }
+  &[size="medium"] {
+    --taskbar-height: var(--taskbar-height-medium);
+  }
+  &[size="large"] {
+    --taskbar-height: var(--taskbar-height-large);
+  }
+  &[size="xlarge"] {
+    --taskbar-height: var(--taskbar-height-xlarge);
+  }
+  
+  background-color: var(--taskbar-background-color);
+  backdrop-filter: var(--taskbar-backdrop-filter);
+  -webkit-backdrop-filter: var(--taskbar-backdrop-filter);
+  border-top: var(--taskbar-border-top);
+  border-bottom: var(--taskbar-border-bottom);
+  border-left: var(--taskbar-border-left);
+  border-right: var(--taskbar-border-right);
+  padding-left: var(--taskbar-padding-horizontal);
+  padding-right: var(--taskbar-padding-horizontal);
+  padding-top: var(--taskbar-padding-vertical);
+  padding-bottom: var(--taskbar-padding-vertical);
+  
+  // Overridden by the size attribute
+  height: var(--taskbar-height);
+}
+
+/**
+ * Start Button
+ * The start button is the button on the taskbar that opens the start menu.
+ * ------------------------------------------------------------------------
+ */
+web-os-start-button {
+  contain: layout paint;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &[size="small"] {
+    --start-button-width: var(--start-button-width-small);
+    --start-button-height: var(--start-button-height-small);
+    --start-button-icon-size: var(--start-button-icon-size-small);
+  }
+  &[size="medium"] {
+    --start-button-width: var(--start-button-width-medium);
+    --start-button-height: var(--start-button-height-medium);
+    --start-button-icon-size: var(--start-button-icon-size-medium);
+  }
+  &[size="large"] {
+    --start-button-width: var(--start-button-width-large);
+    --start-button-height: var(--start-button-height-large);
+    --start-button-icon-size: var(--start-button-icon-size-large);
+  }
+  &[size="xlarge"] {
+    --start-button-width: var(--start-button-width-xlarge);
+    --start-button-height: var(--start-button-height-xlarge);
+    --start-button-icon-size: var(--start-button-icon-size-xlarge);
+  }
+
+  --start-button-icon-color: var(--start-button-normal-icon-color);
+  --start-button-background-color: var(--start-button-background-color);
+
+  &:hover {
+    --start-button-icon-color: var(--start-button-hover-icon-color);
+    --start-button-background-color: var(--start-button-hover-background-color);
+  }
+  &:active {
+    --start-button-icon-color: var(--start-button-active-icon-color);
+    --start-button-background-color: var(--start-button-active-background-color);
+  }
+  
+  width: var(--start-button-width);
+  height: var(--start-button-height);
+  border-radius: var(--start-button-border-radius);
+  background-color: var(--start-button-background-color);
+  color: var(--start-button-icon-color);
+
+  & > svg {
+    width: var(--start-button-icon-size);
+    height: var(--start-button-icon-size);
+    margin: auto;
+
+    & > path {
+      fill: var(--start-button-icon-color);
+    }
+  }
+}
+
+/**
+ * Clock
+ * The clock is the digital clock on the taskbar.
+ * ----------------------------------------------
+ */
+web-os-taskbar-clock {
+  contain: layout paint;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 100%;
+
+  &[size="small"] {
+    --clock-font-size: var(--clock-font-size-small);
+    --clock-gap: var(--clock-gap-small);
+  }
+  &[size="medium"] {
+    --clock-font-size: var(--clock-font-size-medium);
+    --clock-gap: var(--clock-gap-medium);
+  }
+  &[size="large"] {
+    --clock-font-size: var(--clock-font-size-large);
+    --clock-gap: var(--clock-gap-large);
+  }
+  &[size="xlarge"] {
+    --clock-font-size: var(--clock-font-size-xlarge);
+    --clock-gap: var(--clock-gap-xlarge);
+  }
+
+  --clock-color: var(--clock-normal-color);
+
+  &:hover {
+    --clock-background-color: var(--clock-hover-background-color);
+    --clock-color: var(--clock-hover-color);
+  }
+  &:active {
+    --clock-background-color: var(--clock-active-background-color);
+    --clock-color: var(--clock-active-color);
+  }
+
+  border-radius: var(--clock-border-radius);
+  background-color: var(--clock-background-color);
+  padding-left: var(--clock-padding-horizontal);
+  padding-right: var(--clock-padding-horizontal);
+  padding-top: var(--clock-padding-vertical);
+  padding-bottom: var(--clock-padding-vertical);
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--clock-gap);
+    white-space: nowrap;
+
+    & > span {
+      font-size: var(--clock-font-size);
+      color: var(--clock-color);
+    }
+  }
+}
+
+/**
+ * Show Desktop Button
+ * The show desktop button is the button on the taskbar that minimizes all windows.
+ * --------------------------------------------------------------------------------
+ */
+web-os-taskbar-show-desktop {
+  contain: layout paint;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  &[size="small"] {
+    --show-desktop-button-width: var(--show-desktop-button-width-small);
+    --show-desktop-button-border-radius: var(--show-desktop-button-border-radius-small);
+  }
+  &[size="medium"] {
+    --show-desktop-button-width: var(--show-desktop-button-width-medium);
+    --show-desktop-button-border-radius: var(--show-desktop-button-border-radius-medium);
+  }
+  &[size="large"] {
+    --show-desktop-button-width: var(--show-desktop-button-width-large);
+    --show-desktop-button-border-radius: var(--show-desktop-button-border-radius-large);
+  }
+  &[size="xlarge"] {
+    --show-desktop-button-width: var(--show-desktop-button-width-xlarge);
+    --show-desktop-button-border-radius: var(--show-desktop-button-border-radius-xlarge);
+  }
+
+  --show-desktop-button-icon-color: var(--show-desktop-button-normal-icon-color);
+
+  &:hover {
+    --show-desktop-button-icon-color: var(--show-desktop-button-hover-icon-color);
+    --show-desktop-button-background-color: var(--show-desktop-button-hover-background-color);
+  }
+  &:active {
+    --show-desktop-button-icon-color: var(--show-desktop-button-active-icon-color);
+    --show-desktop-button-background-color: var(--show-desktop-button-active-background-color);
+  }
+
+  border-radius: var(--show-desktop-button-border-radius);
+  background-color: var(--show-desktop-button-background-color);
+  padding-left: var(--show-desktop-button-padding-horizontal);
+  padding-right: var(--show-desktop-button-padding-horizontal);
+  padding-top: var(--show-desktop-button-padding-vertical);
+  padding-bottom: var(--show-desktop-button-padding-vertical);
+  width: var(--show-desktop-button-width);
+
+  svg {
+    width: calc(var(--show-desktop-button-width) * 0.65);
+    height: calc(var(--show-desktop-button-width) * 0.65);
+    margin: auto;
+
+    & > path {
+      fill: var(--show-desktop-button-icon-color);
+    }
+  }
 }

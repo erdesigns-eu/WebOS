@@ -18,6 +18,12 @@
     "typescript": "^5.0.2",
     "vite": "^4.5.0",
     "vite-plugin-testing": "^2.1.14",
+    "vite-svg-loader": "^4.0.0",
     "vitest": "^0.34.6"
+  },
+  "dependencies": {
+    "@fontsource-variable/roboto-mono": "^5.0.16",
+    "@fontsource/roboto": "^5.0.8",
+    "@material-design-icons/svg": "^0.14.13"
   }
 }

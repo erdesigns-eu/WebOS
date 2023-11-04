@@ -23,6 +23,13 @@ const maxThemeNameLength = 32;
 const minThemeNameLength = 3;
 
 /**
+ * The skip root rule
+ * @description The skip root rule is used to prevent the theme manager from removing the CSS variables.
+ * @type string
+ */
+const skipRootRule = "--skip-root: \"true\";";
+
+/**
  * @class ThemeManagerTheme
  * @description The class that represents a theme in the theme manager system.
  */
@@ -153,6 +160,35 @@ abstract class ThemeManagerTheme {
   }
 
   /**
+   * @method getSkipRootStyleSheet
+   * @description Returns the style sheet that contains the CSS variable -skip-root: \"true\"; rule or null if it does not exist.
+   */
+  #getSkipRootStyleSheet(): CSSStyleSheet {
+    // Find the stylesheet that contains the CSS variable -skip-root: \"true\"; rule
+    let skipRootStyleSheet : CSSStyleSheet | null = null;
+    for (let i = 0; i < document.styleSheets.length; i++) {
+      const sheet = document.styleSheets[i] as CSSStyleSheet;
+      // Check if the sheet contains the skip root rule
+      if (sheet.cssRules.length > 0) {
+        for (let j = 0; j < sheet.cssRules.length; j++) {
+          const rule = sheet.cssRules[j];
+          // Check if the rule is the skip root rule
+          if (rule.cssText.includes(skipRootRule)) {
+            skipRootStyleSheet = sheet;
+            break;
+          }
+        }
+      }
+      // Check if the skip root style sheet was found
+      if (skipRootStyleSheet !== null) {
+        break;
+      }
+    }
+    // Return the skip root style sheet
+    return skipRootStyleSheet as CSSStyleSheet;
+  }
+
+  /**
    * Returns the accent color with the increased brightness
    * @param amount The amount to increase the brightness by
    */
@@ -193,13 +229,22 @@ abstract class ThemeManagerTheme {
       name = "--" + name;
     }
     // Get the style sheet of the document
-    const styleSheet = document.styleSheets[0] as CSSStyleSheet;
+    const styleSheet = this.#getSkipRootStyleSheet();
     // Remove the old CSS variable if it exists
-    for (let i = 0; i < styleSheet.cssRules.length; i++) {
-      const rule = styleSheet.cssRules[i];
-      if (rule.cssText.startsWith(`:root { ${name}:`)) {
-        styleSheet.deleteRule(i);
-        break;
+    if (styleSheet.cssRules.length > 0) {
+      for (let i = 0; i < styleSheet.cssRules.length; i++) {
+        const rule = styleSheet.cssRules[i];
+        // Check if the rule is a CSS variable rule
+        if (rule.cssText.startsWith(":root {")) {
+          // Check if the rule is the skip root rule (this is used to prevent the theme manager from removing the CSS variables)
+          if (rule.cssText.includes(skipRootRule)) {
+            continue;
+          }
+          // If the rule is not the skip root rule, remove it
+          styleSheet.deleteRule(i);
+          // Decrement the index
+          i--;
+        }
       }
     }
     // Set the CSS variable
@@ -228,13 +273,22 @@ abstract class ThemeManagerTheme {
       throw new ThemeManagerThemeError("Invalid CSS variables! The CSS variables cannot be an array.");
     }
     // Get the style sheet of the document
-    const styleSheet = document.styleSheets[0] as CSSStyleSheet;
+    const styleSheet = this.#getSkipRootStyleSheet();
     // Remove the old CSS variables if they exist
-    for (let i = 0; i < styleSheet.cssRules.length; i++) {
-      const rule = styleSheet.cssRules[i];
-      if (rule.cssText.startsWith(":root { --")) {
-        styleSheet.deleteRule(i);
-        i--;
+    if (styleSheet.cssRules.length > 0) {
+      for (let i = 0; i < styleSheet.cssRules.length; i++) {
+        const rule = styleSheet.cssRules[i];
+        // Check if the rule is a CSS variable rule
+        if (rule.cssText.startsWith(":root {")) {
+          // Check if the rule is the skip root rule (this is used to prevent the theme manager from removing the CSS variables)
+          if (rule.cssText.includes(skipRootRule)) {
+            continue;
+          }
+          // If the rule is not the skip root rule, remove it
+          styleSheet.deleteRule(i);
+          // Decrement the index
+          i--;
+        }
       }
     }
     // Set the CSS variables

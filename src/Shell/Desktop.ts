@@ -3,8 +3,6 @@
  * - v1.0.0 (2023-10-21): Initial release
  */
 
-import { SystemManager } from "../System/System";
-
 /**
  * The Desktop class
  * @class Desktop
@@ -52,13 +50,6 @@ class Desktop extends HTMLElement {
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     // Attribute change code
     console.log(`Attribute ${name} changed from ${oldValue} to ${newValue}`);
-  }
-
-  /**
-   * Returns the SystemManager instance
-   */
-  get system(): SystemManager {
-    return SystemManager.getInstance();
   }
 
 }

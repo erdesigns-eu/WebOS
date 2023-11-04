@@ -1,0 +1,139 @@
+/**
+ * Start Menu
+ * The start menu is the menu that opens when the start button is clicked.
+ * ------------------------------------------------------------------------
+ */
+ web-os-start-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+
+  /**
+   * Compact start menu style
+   */
+  &[menu-style="compact"] {
+    &[size="small"] {
+      --taskbar-height: var(--taskbar-height-small);
+      --start-menu-width: var(--start-menu-compact-width-small);
+      --start-menu-height: var(--start-menu-compact-height-small);
+      --start-menu-margin-top: var(--start-menu-compact-margin-vertical-small);
+      --start-menu-margin-bottom: var(--start-menu-compact-margin-vertical-small);
+      --start-menu-margin-left: var(--start-menu-compact-margin-horizontal-small);
+      --start-menu-margin-right: var(--start-menu-compact-margin-horizontal-small);
+      --start-menu-border-radius: var(--start-menu-compact-border-radius-small);
+      --start-menu-side-width: var(--start-menu-compact-side-width-small);
+    }
+    &[size="medium"] {
+      --taskbar-height: var(--taskbar-height-medium);
+      --start-menu-width: var(--start-menu-compact-width-medium);
+      --start-menu-height: var(--start-menu-compact-height-medium);
+      --start-menu-margin-top: var(--start-menu-compact-margin-vertical-medium);
+      --start-menu-margin-bottom: var(--start-menu-compact-margin-vertical-medium);
+      --start-menu-margin-left: var(--start-menu-compact-margin-horizontal-medium);
+      --start-menu-margin-right: var(--start-menu-compact-margin-horizontal-medium);
+      --start-menu-border-radius: var(--start-menu-compact-border-radius-medium);
+      --start-menu-side-width: var(--start-menu-compact-side-width-medium);
+    }
+    &[size="large"] {
+      --taskbar-height: var(--taskbar-height-large);
+      --start-menu-width: var(--start-menu-compact-width-large);
+      --start-menu-height: var(--start-menu-compact-height-large);
+      --start-menu-margin-top: var(--start-menu-compact-margin-vertical-large);
+      --start-menu-margin-bottom: var(--start-menu-compact-margin-vertical-large);
+      --start-menu-margin-left: var(--start-menu-compact-margin-horizontal-large);
+      --start-menu-margin-right: var(--start-menu-compact-margin-horizontal-large);
+      --start-menu-border-radius: var(--start-menu-compact-border-radius-large);
+      --start-menu-side-width: var(--start-menu-compact-side-width-large);
+    }
+    &[size="xlarge"] {
+      --taskbar-height: var(--taskbar-height-xlarge);
+      --start-menu-width: var(--start-menu-compact-width-xlarge);
+      --start-menu-height: var(--start-menu-compact-height-xlarge);
+      --start-menu-margin-top: var(--start-menu-compact-margin-vertical-xlarge);
+      --start-menu-margin-bottom: var(--start-menu-compact-margin-vertical-xlarge);
+      --start-menu-margin-left: var(--start-menu-compact-margin-horizontal-xlarge);
+      --start-menu-margin-right: var(--start-menu-compact-margin-horizontal-xlarge);
+      --start-menu-border-radius: var(--start-menu-compact-border-radius-xlarge);
+      --start-menu-side-width: var(--start-menu-compact-side-width-xlarge);
+    }
+    --start-menu-main-background: var(--start-menu-compact-background);
+    --start-menu-side-background: var(--start-menu-compact-glass-background);
+  }
+
+  /**
+   * Full start menu style
+   */
+  &[menu-style="full"] {
+    // TODO implement full start menu style
+  }
+
+  bottom: var(--taskbar-height);
+  width: var(--start-menu-width);
+  height: var(--start-menu-height);
+  margin-top: var(--start-menu-margin-top);
+  margin-bottom: var(--start-menu-margin-bottom);
+  margin-left: var(--start-menu-margin-left);
+  margin-right: var(--start-menu-margin-right);
+  border-radius: var(--start-menu-border-radius);
+
+  web-os-start-menu-compact-main {
+    flex: 1;
+    background: var(--start-menu-main-background);
+  }
+
+  web-os-start-menu-compact-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    background: var(--start-menu-side-background);
+    width: var(--start-menu-side-width);
+
+    .top, .bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--start-menu-compact-button-color);
+      background: var(--start-menu-compact-button-background-color);
+      width: var(--start-menu-side-width);
+      height: var(--start-menu-side-width);
+      border-radius: var(--start-menu-compact-button-border-radius);
+
+      svg {
+        width: calc(var(--start-menu-side-width) * 0.6);
+        height: calc(var(--start-menu-side-width) * 0.6);
+      }
+
+      svg > path {
+        fill: var(--start-menu-compact-button-color);
+      }
+
+      &:hover {
+        color: var(--start-menu-compact-button-hover-color);
+        background: var(--start-menu-compact-button-hover-background-color);
+
+        svg > path {
+          fill: var(--start-menu-compact-button-hover-color);
+        }
+      }
+      &:active {
+        color: var(--start-menu-compact-button-active-color);
+        background: var(--start-menu-compact-button-active-background-color);
+
+        svg > path {
+          fill: var(--start-menu-compact-button-active-color);
+        }
+      }
+    }
+  }
+}

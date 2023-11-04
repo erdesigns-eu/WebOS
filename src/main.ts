@@ -1,5 +1,14 @@
+// Main entry point for the WebOS library
+import "./register-service-worker";
+import "./register-fonts";
+
 // Import the main scss file to be compiled into the main.css file
 import "../styles/main.scss";
+
+// Import the WebOS custom element registration function
+import { registerWebOSElements } from "./register-elements";
+// Register the WebOS custom elements with the browser
+registerWebOSElements();
 
 // Import the Kernel Modules
 import { Clipboard } from "./System/Kernel/Modules/Clipboard";
@@ -56,8 +65,3 @@ const themes = [
 import { SystemManager } from "./System/System";
 // Instantiate the SystemManager instance and load the kernel modules, register root, and permission callback.
 SystemManager.instantiate(kernelModules, defaultPermissionRequestCallback, [], themes);
-
-// Import the WebOS custom element registration function
-import { registerWebOSElements } from "./register-elements";
-// Register the WebOS custom elements with the browser
-registerWebOSElements();

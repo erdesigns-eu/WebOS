@@ -5,5 +5,140 @@
  * ------------------------------------------------------------------
  */
  :root {
-  --accent-color: #0073ff;
+  
+  // This is a special variable that is used to skip the root element
+  // from being removed when the theme is changed. (Do not remove)
+  --skip-root: "true";
+  // End of special variable (do not remove)
+
+
+  /**
+   * General Colors
+   */
+  --accent-color: #EAA640;
+
+  /**
+   * Taskbar
+   */
+  --taskbar-height-small: 30px;
+  --taskbar-height-medium: 40px;
+  --taskbar-height-large: 50px;
+  --taskbar-height-xlarge: 60px;
+  --taskbar-backdrop-filter: blur(15px);
+  --taskbar-background-color: rgba(26, 26, 26, 0.7);
+  --taskbar-border-top: 1px solid rgba(255, 255, 255, 0.125);
+  --taskbar-border-bottom: none;
+  --taskbar-border-left: none;
+  --taskbar-border-right: none;
+  --taskbar-padding-vertical: 0px;
+  --taskbar-padding-horizontal: 2px;
+
+  /**
+   * Start Button
+   */
+  --start-button-width-small: 30px;
+  --start-button-height-small: 30px;
+  --start-button-icon-size-small: 18px;
+  --start-button-width-medium: 40px;
+  --start-button-height-medium: 40px;
+  --start-button-icon-size-medium: 28px;
+  --start-button-width-large: 50px;
+  --start-button-height-large: 50px;
+  --start-button-icon-size-large: 38px;
+  --start-button-width-xlarge: 60px;
+  --start-button-height-xlarge: 60px;
+  --start-button-icon-size-xlarge: 48px;
+  --start-button-hover-icon-color: rgba(255, 255, 255, 0.9);
+  --start-button-hover-background-color: rgba(255, 255, 255, 0.2);
+  --start-button-active-icon-color: rgba(255, 255, 255, 0.75);
+  --start-button-active-background-color: rgba(255, 255, 255, 0.1);
+  --start-button-normal-icon-color: rgba(255, 255, 255, 0.6);
+  --start-button-background-color: transparent;
+  --start-button-border-radius: 5px;
+
+  /**
+   * Taskbar Clock
+   */
+  --clock-font-size-small: 10px;
+  --clock-font-size-medium: 12px;
+  --clock-font-size-large: 14px;
+  --clock-font-size-xlarge: 16px;
+  --clock-gap-small: 0px;
+  --clock-gap-medium: 2px;
+  --clock-gap-large: 2px;
+  --clock-gap-xlarge: 2px;
+  --clock-hover-background-color: rgba(255, 255, 255, 0.2);
+  --clock-hover-color: rgba(255, 255, 255, 0.9);
+  --clock-active-background-color: rgba(255, 255, 255, 0.1);
+  --clock-active-color: rgba(255, 255, 255, 0.75);
+  --clock-normal-color: rgba(255, 255, 255, 0.6);
+  --clock-padding-vertical: 0px;
+  --clock-padding-horizontal: 5px;
+  --clock-border-radius: 5px;
+
+  /**
+   * Show Desktop Button
+   */
+  --show-desktop-button-width-small: 24px;
+  --show-desktop-button-border-radius-small: 2px;
+  --show-desktop-button-width-medium: 36px;
+  --show-desktop-button-border-radius-medium: 3px;
+  --show-desktop-button-width-large: 48px;
+  --show-desktop-button-border-radius-large: 4px;
+  --show-desktop-button-width-xlarge: 62px;
+  --show-desktop-button-border-radius-xlarge: 5px;
+  --show-desktop-button-hover-icon-color: rgba(255, 255, 255, 0.9);
+  --show-desktop-button-hover-background-color: rgba(255, 255, 255, 0.2);
+  --show-desktop-button-active-icon-color: rgba(255, 255, 255, 0.75);
+  --show-desktop-button-active-background-color: rgba(255, 255, 255, 0.1);
+  --show-desktop-button-normal-icon-color: rgba(255, 255, 255, 0.6);
+  --show-desktop-button-padding-vertical: 0px;
+  --show-desktop-button-padding-horizontal: 5px;
+
+  /**
+   * Start Menu (Compact)
+   */
+  --start-menu-compact-width-small: 200px;
+  --start-menu-compact-height-small: 400px;
+  --start-menu-compact-margin-vertical-small: 2px;
+  --start-menu-compact-margin-horizontal-small: 2px;
+  --start-menu-compact-border-radius-small: 5px;
+  --start-menu-compact-side-width-small: 30px;
+
+  --start-menu-compact-width-medium: 250px;
+  --start-menu-compact-height-medium: 500px;
+  --start-menu-compact-margin-vertical-medium: 2px;
+  --start-menu-compact-margin-horizontal-medium: 2px;
+  --start-menu-compact-border-radius-medium: 5px;
+  --start-menu-compact-side-width-medium: 40px;
+
+  --start-menu-compact-width-large: 300px;
+  --start-menu-compact-height-large: 600px;
+  --start-menu-compact-margin-vertical-large: 2px;
+  --start-menu-compact-margin-horizontal-large: 2px;
+  --start-menu-compact-border-radius-large: 5px;
+  --start-menu-compact-side-width-large: 50px;
+
+  --start-menu-compact-width-xlarge: 350px;
+  --start-menu-compact-height-xlarge: 700px;
+  --start-menu-compact-margin-vertical-xlarge: 2px;
+  --start-menu-compact-margin-horizontal-xlarge: 2px;
+  --start-menu-compact-border-radius-xlarge: 5px;
+  --start-menu-compact-side-width-xlarge: 60px;
+
+  --start-menu-compact-backdrop-filter: blur(15px);
+  --start-menu-compact-glass-background: rgba(26, 26, 26, 0.4);
+  --start-menu-compact-background: rgba(26, 26, 26, 0.7);
+  --start-menu-compact-border-top: 1px solid rgba(255, 255, 255, 0.125);
+  --start-menu-compact-border-bottom: 1px solid rgba(255, 255, 255, 0.125);
+  --start-menu-compact-border-left: 1px solid rgba(255, 255, 255, 0.125);
+  --start-menu-compact-border-right: 1px solid rgba(255, 255, 255, 0.125);
+
+  --start-menu-compact-button-border-radius: 5px;
+  --start-menu-compact-button-color: rgba(255, 255, 255, 0.6);
+  --start-menu-compact-button-hover-color: rgba(255, 255, 255, 0.9);
+  --start-menu-compact-button-active-color: rgba(255, 255, 255, 0.75);
+  --start-menu-compact-button-background-color: transparent;
+  --start-menu-compact-button-hover-background-color: rgba(255, 255, 255, 0.2);
+  --start-menu-compact-button-active-background-color: rgba(255, 255, 255, 0.1);
 }

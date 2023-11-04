@@ -3,14 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <title>WebOS</title>
-    <link rel="icon shortcut" type="image/png" href="/icon.png" />
+    <link rel="icon shortcut" type="image/svg" href="/icon.svg" />
+    <link rel="preload" href="/wallpapers/swirls.jpg" as="image">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <web-os>
+    <web-os background-image="/wallpapers/swirls.jpg">
       <web-os-desktop></web-os-desktop>
-      <web-os-taskbar></web-os-taskbar>
+      <web-os-taskbar size="medium">
+        <web-os-start-button slot="left"></web-os-start-button>
+        <web-os-taskbar-clock time-format="24h" date-format="short" slot="right"></web-os-taskbar-clock>
+        <web-os-taskbar-show-desktop slot="right">
+          <web-os-mdi mdi-style="round" mdi-icon="desk" slot="left"></web-os-mdi>
+        </web-os-taskbar-show-desktop>
+      </web-os-taskbar>
+      <web-os-start-menu size="medium" menu-style="compact"></web-os-start-menu>
       <web-os-brightness></web-os-brightness>
       <web-os-nightlight></web-os-nightlight>
       <web-os-screensaver></web-os-screensaver>

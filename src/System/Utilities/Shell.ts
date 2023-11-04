@@ -91,18 +91,6 @@ class Shell {
   }
 
   /**
-   * Sets the shell background type
-   * @method setBackgroundType
-   * @param type The type to set as the background type
-   */
-  static setBackgroundType(type: string): void {
-    const shell = this.#shellElement();
-    if (shell) {
-      shell.backgroundType = type;
-    }
-  }
-
-  /**
    * Sets the shell background size
    * @method setBackgroundSize
    * @param size The size to set as the background size

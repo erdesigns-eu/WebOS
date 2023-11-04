@@ -3,9 +3,6 @@
  * - v1.0.0 (2023-10-21): Initial release
  */
 
-import { SystemManager } from "../System/System";
-import { Kernel } from "../System/Kernel/Kernel";
-
 import { Background } from "./Background/Index";
 import { Matrix } from "./Background/Matrix";
 import { Mesh } from "./Background/Mesh";
@@ -38,7 +35,6 @@ class WebOS extends HTMLElement {
 
   static elementName = "web-os";
 
-  _backgroundType               : string = "color";       // The type of background (color, image or animated)
   _backgroundColor              : string = "transparent"; // The background color
   _backgroundImage              : string = "";            // The background image
   _backgroundSize               : string = "cover";       // The background size
@@ -60,7 +56,7 @@ class WebOS extends HTMLElement {
     // Call the super constructor
     super();
     // Create the shadow DOM
-    const shadowRoot = this.attachShadow({ mode: "closed" });
+    const shadowRoot                                  = this.attachShadow({ mode: "closed" });
     // Create the background element
     this.#backgroundElement                           = document.createElement("canvas");
     this.#backgroundElement.width                     = innerWidth;
@@ -76,9 +72,9 @@ class WebOS extends HTMLElement {
     this.#backgroundElement.style.backgroundSize      = this._backgroundSize;
     this.#backgroundElement.style.backgroundImage     = this._backgroundImage.length ? `url(${this._backgroundImage})` : "";
     this.#backgroundElement.style.backgroundPosition  = this._backgroundPosition;
+    this.#backgroundElement.style.transition          = "background-color 0.35s ease, background-image 0.35s ease";
     // Add a resize observer to the background element to resize it accordingly when the window is resized
-    // @ts-expect-error
-    this.#resizeObserver = new ResizeObserver(this.system.utility.debounce(this.#handleResize.bind(this), this._backgroundAnimationDebounce));
+    this.#resizeObserver = new ResizeObserver(this.#handleResize.bind(this));
     this.#resizeObserver.observe(this);
     // Add the background element to the shadow DOM
     shadowRoot.appendChild(this.#backgroundElement);
@@ -94,7 +90,7 @@ class WebOS extends HTMLElement {
    * @description The observedAttributes method returns an array of attribute names to observe
    */
   static get observedAttributes() {
-    return ["background-type", "background-color", "background-image", "background-size", "background-position", "background-animation", "background-animation-options", "background-animation-debounce", "title", "icon"];
+    return ["background-color", "background-image", "background-size", "background-position", "background-animation", "background-animation-options", "background-animation-debounce"];
   }
 
   /**
@@ -115,47 +111,15 @@ class WebOS extends HTMLElement {
   }
 
   /**
-   * Sets the background type
-   * @method setBackgroundType
-   */
-  #setBackgroundType(type: string) {
-    switch (type) {
-      case "color":
-        this.setAttribute("background-color", this._backgroundColor);
-        this.setAttribute("background-image", "");
-        if (this.#animation) {
-          this.#animation.stop();
-        }
-        break;
-      case "image":
-        this.setAttribute("background-color", "");
-        this.setAttribute("background-image", this._backgroundImage);
-        if (this.#animation) {
-          this.#animation.stop();
-        }
-        break;
-      case "animated":
-        this.setAttribute("background-image", "");
-        if (this.#animation) {
-          this.#animation.start();
-        }
-        break;
-      default:
-        throw new WebOSError(`Invalid background type: ${type}`);
-    }
-  }
-
-  /**
    * Sets the background animation
    * @method setBackgroundAnimation
    */
   #setBackgroundAnimation(name: string) {
+    this.#backgroundElement!.style.backgroundColor = "transparent";
+    this.#backgroundElement!.style.backgroundImage = "";
     if (this.#animation) {
       this.#animation.stop();
       this.#animation = null;
-    }
-    if (this._backgroundType !== "animated") {
-      this.setAttribute("background-type", "animated");
     }
     switch (name) {
       case "matrix":
@@ -182,9 +146,7 @@ class WebOS extends HTMLElement {
     if (!window.system.utility.isValidColor) {
       throw new WebOSError("Invalid color! Please use a valid CSS (HEX, RGB, RGBA) color.");
     }
-    if (this._backgroundType !== "color") {
-      this.setAttribute("background-type", "color");
-    }
+    this.#backgroundElement!.style.backgroundImage = "";
     this.#backgroundElement!.style.backgroundColor = color;
   }
 
@@ -193,9 +155,7 @@ class WebOS extends HTMLElement {
    * @method setBackgroundImage
    */
   #setBackgroundImage(image: string) {
-    if (this._backgroundType !== "image") {
-      this.setAttribute("background-type", "image");
-    }
+    this.#backgroundElement!.style.backgroundColor = "transparent";
     this.#backgroundElement!.style.backgroundImage = `url(${image})`;
   }
 
@@ -237,9 +197,6 @@ class WebOS extends HTMLElement {
     }
     // Update accordingly based on the attribute name
     switch (name) {
-      case "background-type":
-        this.#setBackgroundType(newValue);
-        break;
       case "background-color":
         this.#setBackgroundColor(newValue);
         break;
@@ -261,34 +218,7 @@ class WebOS extends HTMLElement {
       case "background-animation-debounce":
         this._backgroundAnimationDebounce = parseInt(newValue);
         break;
-      case "title":
-        if (this.kernel.checkModuleIsAvailable("Document")) {
-          this.kernel.setModuleValue("Document", "title", newValue);
-        }
-        break;
-      case "icon":
-        if (this.kernel.checkModuleIsAvailable("Document")) {
-          this.kernel.setModuleValue("Document", "icon", newValue);
-        }        
-        break;
     }
-  }
-
-  /**
-   * Background type getter
-   * @getter
-   */
-  get backgroundType(): string {
-    return this._backgroundType;
-  }
-
-  /**
-   * Background type setter
-   * @setter
-   */
-  set backgroundType(value: string) {
-    this._backgroundType = value;
-    this.setAttribute("background-type", value);
   }
 
   /**
@@ -428,56 +358,6 @@ class WebOS extends HTMLElement {
    */
   get animations(): string[] {
     return ["matrix", "mesh", "orbs"];
-  }
-
-  /**
-   * Title getter
-   * @getter
-   */
-  get title(): string {
-    return this._title;
-  }
-
-  /**
-   * Title setter
-   * @setter
-   */
-  set title(value: string) {
-    this._title = value;
-    this.setAttribute("title", value);
-  }
-
-  /**
-   * Icon getter
-   * @getter
-   */
-  get icon(): string {
-    return this._icon;
-  }
-
-  /**
-   * Icon setter
-   * @setter
-   */
-  set icon(value: string) {
-    this._icon = value;
-    this.setAttribute("icon", value);
-  }
-
-  /**
-   * Returns the SystemManager instance
-   */
-  get system(): SystemManager {
-    return SystemManager.getInstance();
-  }
-
-  /**
-   * Returns the Kernel instance
-   * @getter
-   */
-  get kernel(): Kernel {
-    // @ts-expect-error
-    return window.system.kernel as Kernel;
   }
 
 }
