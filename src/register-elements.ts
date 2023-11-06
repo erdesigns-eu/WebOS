@@ -9,7 +9,7 @@
 import { WebOS } from "./Shell/WebOS";
 import { Desktop } from "./Shell/Desktop";
 import { Taskbar, StartButton, Clock, ShowDesktop } from "./Shell/Taskbar";
-import { Startmenu, StartmenuCompactMain, StartmenuCompactSide } from "./Shell/Startmenu";
+import { Startmenu, StartmenuCompactMain, StartmenuCompactSide, StartmenuCompactSideButton, StartmenuCompactSideDivider } from "./Shell/Startmenu";
 import { Brightness } from "./Shell/Overlay/Brightness";
 import { Nightlight } from "./Shell/Overlay/Nightlight";
 import { ScreenSaver } from "./Shell/Screensaver";
@@ -45,6 +45,8 @@ const registerWebOSElements = (): void => {
   customElements.define(Startmenu.elementName, Startmenu);
   customElements.define(StartmenuCompactMain.elementName, StartmenuCompactMain);
   customElements.define(StartmenuCompactSide.elementName, StartmenuCompactSide);
+  customElements.define(StartmenuCompactSideButton.elementName, StartmenuCompactSideButton);
+  customElements.define(StartmenuCompactSideDivider.elementName, StartmenuCompactSideDivider);
   
   // Register the Brightness custom element
   customElements.define(Brightness.elementName, Brightness);

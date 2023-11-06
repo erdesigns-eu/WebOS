@@ -7,7 +7,8 @@
   position: fixed;
   display: flex;
   flex-direction: row;
-  overflow: hidden;
+  opacity: 0;
+  z-index: 0;
 
   /**
    * Compact start menu style
@@ -57,8 +58,9 @@
       --start-menu-border-radius: var(--start-menu-compact-border-radius-xlarge);
       --start-menu-side-width: var(--start-menu-compact-side-width-xlarge);
     }
-    --start-menu-main-background: var(--start-menu-compact-background);
-    --start-menu-side-background: var(--start-menu-compact-glass-background);
+    --start-menu-background-main: var(--start-menu-compact-background-main);
+    --start-menu-background-side: var(--start-menu-compact-background-side);
+    --start-menu-backdrop-filter: var(--start-menu-compact-backdrop-filter);
   }
 
   /**
@@ -76,10 +78,19 @@
   margin-left: var(--start-menu-margin-left);
   margin-right: var(--start-menu-margin-right);
   border-radius: var(--start-menu-border-radius);
+  backdrop-filter: var(--start-menu-backdrop-filter);
+  transform: translateY(calc(100% + var(--taskbar-height)));
+
+  &[opened="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   web-os-start-menu-compact-main {
     flex: 1;
-    background: var(--start-menu-main-background);
+    background: var(--start-menu-background-main);
+    border-top-left-radius: var(--start-menu-border-radius);
+    border-bottom-left-radius: var(--start-menu-border-radius);
   }
 
   web-os-start-menu-compact-side {
@@ -88,8 +99,20 @@
     align-items: center;
     justify-content: space-between;
 
-    background: var(--start-menu-side-background);
+    background: var(--start-menu-background-side);
     width: var(--start-menu-side-width);
+    border-top-right-radius: var(--start-menu-border-radius);
+    border-bottom-right-radius: var(--start-menu-border-radius);
+
+    web-os-start-menu-compact-side-divider {
+      width: calc(100% - (var(--start-menu-compact-divider-margin-horizontal) * 2));
+      height: var(--start-menu-compact-divider-height);
+      background: var(--start-menu-compact-divider-color);
+      margin-top: var(--start-menu-compact-divider-margin-vertical);
+      margin-bottom: var(--start-menu-compact-divider-margin-vertical);
+      margin-left: var(--start-menu-compact-divider-margin-horizontal);
+      margin-right: var(--start-menu-compact-divider-margin-horizontal);
+    }
 
     .top, .bottom {
       display: flex;
@@ -99,6 +122,7 @@
       width: 100%;
     }
 
+    [role="button"],
     button {
       display: flex;
       align-items: center;

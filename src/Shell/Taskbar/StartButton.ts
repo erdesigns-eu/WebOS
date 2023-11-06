@@ -4,6 +4,7 @@
  */
 
 import { Taskbar } from "../Taskbar";
+import { Startmenu } from "../Startmenu";
 
 /**
  * The startButtonSize type
@@ -27,7 +28,8 @@ import startButtonIconSVG from "/assets/logo.svg?raw";
 class StartButton extends HTMLElement {
 
   static elementName = "web-os-start-button"; // The name of the custom element (used for registering the custom element)
-  _size: startButtonSize = "medium";          // The height of the taskbar
+  _size   : startButtonSize = "medium";       // The height of the taskbar
+  _opened : boolean         = false;          // Whether or not the start menu is opened
   
   /**
    * Creates a new Taskbar HTML element
@@ -39,7 +41,7 @@ class StartButton extends HTMLElement {
     // Call the super constructor
     super();
     // Set the innerHTML
-    this.innerHTML = startButtonIconSVG;
+    this.innerHTML = startButtonIconSVG;    
     // Add type attribute
     this.setAttribute("type", "button");
     // Add tabindex attribute
@@ -65,7 +67,40 @@ class StartButton extends HTMLElement {
         return;
       }
       // Set the taskbar size
-      taskbar.setAttribute('size', this.size);
+      taskbar.setAttribute("size", this.size);
+    }
+  }
+
+  /**
+   * The handleClick method
+   * @method handleClick
+   * @description The handleClick method handles the click event on the start button
+   */
+  #handleClick() {
+    // Get the start menu element
+    const startMenu = this.startMenu;
+    // Make sure the start menu exists
+    if (startMenu) {
+      // Toggle the start menu
+      startMenu.toggle();
+    }
+  }
+
+  /**
+   * The handleKeydown method
+   * @method handleKeydown
+   * @description The handleKeydown method handles the keydown event on the start button
+   */
+  #handleKeydown(event: KeyboardEvent) {
+    // Get the start menu element
+    const startMenu = this.startMenu;
+    // Make sure the start menu exists
+    if (startMenu) {
+      // Make sure the key is the enter key
+      if (event.key === "Enter") {
+        // Toggle the opened attribute
+        startMenu.toggle();
+      }
     }
   }
 
@@ -75,7 +110,7 @@ class StartButton extends HTMLElement {
    * @description The observedAttributes method returns an array of attribute names to observe
    */
   static get observedAttributes() {
-    return ['size'];
+    return ["size", "opened"];
   }
 
   /**
@@ -84,7 +119,10 @@ class StartButton extends HTMLElement {
    * @description The connectedCallback method is called when the element is connected to the DOM
    */
   connectedCallback() {
-    // Initialization code
+    // Add the click event listener
+    this.addEventListener("click", this.#handleClick);
+    // Add the keydown event listener
+    this.addEventListener("keydown", this.#handleKeydown);
   }
 
   /**
@@ -93,7 +131,10 @@ class StartButton extends HTMLElement {
    * @description The disconnectedCallback method is called when the element is disconnected from the DOM
    */
   disconnectedCallback() {
-    // Uninitialization code
+    // Remove the click event listener
+    this.removeEventListener("click", this.#handleClick);
+    // Remove the keydown event listener
+    this.removeEventListener("keydown", this.#handleKeydown);
   }
 
   /**
@@ -108,9 +149,11 @@ class StartButton extends HTMLElement {
     }
     // Handle the attribute change
     switch (name) {
-      case 'size':
-        this._size = newValue as startButtonSize;
+      case "size":
         this.#updateTaskbarSize();
+        break;
+      case "opened":
+        // Nothing to do here.
         break;
     }
   }
@@ -128,7 +171,7 @@ class StartButton extends HTMLElement {
    * @getter size
    */
   set size(value: startButtonSize) {
-    this.setAttribute('size', value);
+    this.setAttribute("size", value);
   }
 
   /**
@@ -137,6 +180,14 @@ class StartButton extends HTMLElement {
    */
   get taskbar(): Taskbar {
     return document.querySelector("web-os-taskbar") as Taskbar;
+  }
+
+  /**
+   * Returns the start menu element
+   * @getter startMenu
+   */
+  get startMenu(): Startmenu {
+    return document.querySelector("web-os-start-menu") as Startmenu;
   }
 
 }

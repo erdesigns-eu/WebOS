@@ -11,3 +11,7 @@
 @import "./shell/startmenu.scss";
 @import "./shell/overlay.scss";
 @import "./shell/screensaver.scss";
+
+// Styles for the WebOS components.
+@import "./helpers/icons.scss";
+@import "./helpers/tooltip.scss";

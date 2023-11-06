@@ -18,6 +18,22 @@
   --accent-color: #EAA640;
 
   /**
+   * Tooltip
+   */
+  --tooltip-arrow-size: 5px;
+  --tooltip-background-color: rgba(26, 26, 26, 0.9);
+  --tooltip-color: rgba(255, 255, 255, 0.9);
+  --tooltip-padding-vertical: 5px;
+  --tooltip-padding-horizontal: 10px;
+  --tooltip-border-radius: 5px;
+  --tooltip-font-size: 12px;
+  --tooltip-font-weight: 400;
+  --tooltip-border: rgba(26, 26, 26, 0.9);
+  --tooltip-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  --tooltip-min-width: 50px;
+  --tooltip-max-width: 300px;
+
+  /**
    * Taskbar
    */
   --taskbar-height-small: 30px;
@@ -127,18 +143,23 @@
   --start-menu-compact-side-width-xlarge: 60px;
 
   --start-menu-compact-backdrop-filter: blur(15px);
-  --start-menu-compact-glass-background: rgba(26, 26, 26, 0.4);
-  --start-menu-compact-background: rgba(26, 26, 26, 0.7);
+  --start-menu-compact-background-main: rgba(26, 26, 26, 0.7);
+  --start-menu-compact-background-side: rgba(26, 26, 26, 0.9);
   --start-menu-compact-border-top: 1px solid rgba(255, 255, 255, 0.125);
   --start-menu-compact-border-bottom: 1px solid rgba(255, 255, 255, 0.125);
   --start-menu-compact-border-left: 1px solid rgba(255, 255, 255, 0.125);
   --start-menu-compact-border-right: 1px solid rgba(255, 255, 255, 0.125);
 
-  --start-menu-compact-button-border-radius: 5px;
+  --start-menu-compact-button-border-radius: 2px;
   --start-menu-compact-button-color: rgba(255, 255, 255, 0.6);
   --start-menu-compact-button-hover-color: rgba(255, 255, 255, 0.9);
   --start-menu-compact-button-active-color: rgba(255, 255, 255, 0.75);
   --start-menu-compact-button-background-color: transparent;
   --start-menu-compact-button-hover-background-color: rgba(255, 255, 255, 0.2);
   --start-menu-compact-button-active-background-color: rgba(255, 255, 255, 0.1);
+
+  --start-menu-compact-divider-height: 1px;
+  --start-menu-compact-divider-color: rgba(255, 255, 255, 0.125);
+  --start-menu-compact-divider-margin-vertical: 2px;
+  --start-menu-compact-divider-margin-horizontal: 2px;
 }

@@ -163,7 +163,6 @@ class Taskbar extends HTMLElement {
   #updateStartmenuSize() {
     // Get the startmenu element
     const startmenu = this.startmenu;
-    console.log(startmenu)
     // Make sure the startmenu element exists
     if (startmenu) {
       // Make sure the startmenu size attribute is not the same as the taskbar size attribute

@@ -4,7 +4,7 @@
  * ------------------------------------------------------------------------------------------------------------------
  */
 web-os-taskbar {
-  contain: size layout;
+  z-index: 1;
 
   &[size="small"] {
     --taskbar-height: var(--taskbar-height-small);
@@ -41,7 +41,6 @@ web-os-taskbar {
  * ------------------------------------------------------------------------
  */
 web-os-start-button {
-  contain: layout paint;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,7 +73,7 @@ web-os-start-button {
     --start-button-icon-color: var(--start-button-hover-icon-color);
     --start-button-background-color: var(--start-button-hover-background-color);
   }
-  &:active {
+  &:active, &[opened="true"] {
     --start-button-icon-color: var(--start-button-active-icon-color);
     --start-button-background-color: var(--start-button-active-background-color);
   }
@@ -102,7 +101,6 @@ web-os-start-button {
  * ----------------------------------------------
  */
 web-os-taskbar-clock {
-  contain: layout paint;
   display: flex;
   align-items: center;
   justify-content: right;
@@ -164,7 +162,6 @@ web-os-taskbar-clock {
  * --------------------------------------------------------------------------------
  */
 web-os-taskbar-show-desktop {
-  contain: layout paint;
   display: flex;
   align-items: center;
   justify-content: center;
