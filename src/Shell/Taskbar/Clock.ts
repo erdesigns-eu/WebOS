@@ -83,6 +83,23 @@ const clockWorkerFunction = () => {
 };
 
 /**
+ * Get the locale date string based on the date and locale
+ * @param date - The date object
+ * @param locale - The locale string
+ * @returns The locale date string
+ */
+const getLocaleDateString = (date: Date, locale: string = 'default'): string => {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: 'long',   // Full name of the day (e.g., zondag)
+    day: 'numeric',    // Day of the month (e.g., 20)
+    month: 'long',     // Full name of the month (e.g., oktober)
+    year: 'numeric',   // Four-digit year (e.g., 2024)
+  };
+
+  return date.toLocaleDateString(locale, options);
+}
+
+/**
  * The Clock class
  * @class Clock
  * @description The custom element that represents the WebOS Taskbar clock
@@ -116,6 +133,7 @@ class Clock extends HTMLElement {
         (this.querySelector("#time") as HTMLElement).innerText = e.data.h24;
       }
       (this.querySelector("#date") as HTMLElement).innerText = this.#formatDate(e.data.date);
+      this.setAttribute("tooltip", getLocaleDateString(e.data.date));
     });
     // Set the clock worker
     this.#clockWorker = clockWorker;
@@ -215,6 +233,7 @@ class Clock extends HTMLElement {
       (this.querySelector("#time") as HTMLElement).innerText = time24();
     }
     (this.querySelector("#date") as HTMLElement).innerText = this.#formatDate(date);
+    this.setAttribute("tooltip", getLocaleDateString(date));
   }
 
   /**
