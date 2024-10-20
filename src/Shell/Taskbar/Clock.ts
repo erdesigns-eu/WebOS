@@ -36,9 +36,9 @@ const clockWorkerFunction = () => {
   // The function that is executed by the interval to update the clock
   const clockWorker = () => {
     const date = new Date();
-    let h = date.getHours();   // 0 - 23
-    let m = date.getMinutes(); // 0 - 59
-    let s = date.getSeconds(); // 0 - 59
+    const h = date.getHours();   // 0 - 23
+    const m = date.getMinutes(); // 0 - 59
+    const s = date.getSeconds(); // 0 - 59
 
     const time12 = () => {
       let h12: any = h; // 0 - 12
@@ -174,9 +174,9 @@ class Clock extends HTMLElement {
    */
   #initializeClock() {
     const date = new Date();
-    let h = date.getHours();   // 0 - 23
-    let m = date.getMinutes(); // 0 - 59
-    let s = date.getSeconds(); // 0 - 59
+    const h = date.getHours();   // 0 - 23
+    const m = date.getMinutes(); // 0 - 59
+    const s = date.getSeconds(); // 0 - 59
 
     const time12 = () => {
       let h12: any = h; // 0 - 12

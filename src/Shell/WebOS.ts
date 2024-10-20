@@ -142,7 +142,6 @@ class WebOS extends HTMLElement {
    * @method setBackgroundColor
    */
   #setBackgroundColor(color: string) {
-    // @ts-expect-error
     if (!window.system.utility.isValidColor) {
       throw new WebOSError("Invalid color! Please use a valid CSS (HEX, RGB, RGBA) color.");
     }
@@ -166,8 +165,7 @@ class WebOS extends HTMLElement {
    */
   connectedCallback() {
     this._title = document.title;
-    // @ts-expect-error
-    this._icon  = document.querySelector("link[rel='icon']")?.href || "";
+    this._icon  = (document.querySelector("link[rel='icon']") as HTMLLinkElement)?.href || "";
   }
 
   /**

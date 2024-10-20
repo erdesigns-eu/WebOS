@@ -67,15 +67,13 @@ class Matrix extends Background {
     // Clear the drops array
     this.#drops = [];
     // Initialize the drops
-    for(var x = 0; x < this.#columns; x++) {
+    for(let x = 0; x < this.#columns; x++) {
       this.#drops[x] = 1;
     }
     // Draw the background
-    // @ts-expect-error
     this.context!.fillStyle = window.system.utility.colorToRGBA(this.#options.backgroundColor, 1);
     this.context!.fillRect(0, 0, this.canvas!.width, this.canvas!.height);
     // Update the background color to be transparent (to make the animation look better)
-    // @ts-expect-error
     this.#options.backgroundColor = window.system.utility.colorToRGBA(this.#options.backgroundColor, 0.05);
     // Set the interval
     this.#interval = setInterval(() => this.draw(), 1000 / this.#options.fps);
@@ -108,7 +106,7 @@ class Matrix extends Background {
     // Set the font size and font name
     this.context!.font = `${this.#options.fontSize}px ${this.#options.fontName}`;
     // Loop over the drops
-    for (var i = 0; i < this.#drops.length; i++) {
+    for (let i = 0; i < this.#drops.length; i++) {
       // Random character to print
       const char = this.#characters[Math.floor(Math.random() * this.#characters.length)];
       // Draw the character

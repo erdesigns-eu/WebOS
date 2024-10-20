@@ -71,7 +71,6 @@ class Orb {
     // Close the path
     context.closePath();
     // Set the fill style
-    // @ts-expect-error
     context.fillStyle = window.system.utility.colorToRGBA(this.#color, this.#opacity);
     // Fill the path
     context.fill();
@@ -110,11 +109,11 @@ class Orbs extends Background {
     // Call the super method
     super.start();
     // Update the orbs
-    for (var i = 0; i < this.#options.orbs; i++) {
-      var randomX = Math.round(-100 + Math.random() * (this.canvas!.width + 100));
-      var randomY = Math.round(-100 + Math.random() * (this.canvas!.height + 100));
-      var speed   = .2 + Math.random() * (this.#options.speed / 10);
-      var size    = 1 + Math.random() * this.#options.radius;
+    for (let i = 0; i < this.#options.orbs; i++) {
+      const randomX = Math.round(-100 + Math.random() * (this.canvas!.width + 100));
+      const randomY = Math.round(-100 + Math.random() * (this.canvas!.height + 100));
+      const speed   = .2 + Math.random() * (this.#options.speed / 10);
+      const size    = 1 + Math.random() * this.#options.radius;
       this.#orbs.push(new Orb(this.#options.radius, speed, size, randomX, randomY, this.#options.color));
     }
     // Draw the animation
@@ -149,7 +148,7 @@ class Orbs extends Background {
     // Draw the background
     this.context!.fillRect(0, 0, this.canvas!.width, this.canvas!.height);
     // Update the orbs
-    for (var i = 0; i < this.#orbs.length; i++) {
+    for (let i = 0; i < this.#orbs.length; i++) {
       this.#orbs[i].update(this.context!);
     }
   }
