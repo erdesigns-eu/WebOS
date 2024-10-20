@@ -59,7 +59,7 @@ class Notifications extends KernelModule {
    */
   requestPermission(): Promise<void> {
     return new Promise((resolve, reject) => {
-      let hasPermission = Notification.permission === 'granted';
+      const hasPermission = Notification.permission === 'granted';
       // Check if the notification permission is granted
       if (hasPermission) {
         // Resolve the promise
@@ -91,7 +91,7 @@ class Notifications extends KernelModule {
    */
   notify(title: string, options?: NotificationOptions): Promise<Notification> {
     return new Promise((resolve, reject) => {
-      let hasPermission = Notification.permission === 'granted';
+      const hasPermission = Notification.permission === 'granted';
       // Check if the notification permission is granted
       if (hasPermission) {
         // Check if the title is valid
