@@ -19,4 +19,5 @@ declare global {
   interface Window {
     system: SystemManager;
   }
+  
 }

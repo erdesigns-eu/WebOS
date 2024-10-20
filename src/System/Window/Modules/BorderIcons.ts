@@ -174,6 +174,6 @@ class SizeableBorderIcons extends SingleBorderIcons {
   constructor() {
     super();
   }
-};
+}
 
 export { DialogBorderIcons, SingleBorderIcons, SizeableBorderIcons };

@@ -134,7 +134,6 @@ class MaterialDesignIcon extends HTMLElement {
    * @method
    * @description The attributeChangedCallback method is called when an attribute is added, removed, updated, or replaced on the element
    */
-  // @ts-ignore-next-line ignore the error because the name parameter is not used
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     // Make sure the value is different
     if (oldValue === newValue) {
