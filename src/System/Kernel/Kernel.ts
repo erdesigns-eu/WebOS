@@ -310,7 +310,6 @@ class Kernel extends EventTarget {
     const module = this.#modules.get(key);
 
     // Check if the function is available on the module
-    // @ts-expect-error
     if (typeof module?.module[functionName] !== "function") {
       // Log the error
       this.#logger.error(`[callModuleFunction] Function ${functionName} is not available on module ${moduleName}!`);
@@ -323,8 +322,7 @@ class Kernel extends EventTarget {
       // Log the function call
       this.#logger.debug(`[callModuleFunction] Calling function ${functionName} on module ${moduleName}`);
       // Call the function on the module and return the result
-      // @ts-expect-error
-      return module[functionName](...args);
+      return module.module[functionName](...args);
     } catch (error) {
       // Log the error
       this.#logger.error(`[callModuleFunction] Function ${functionName} on module ${moduleName} failed with error: ${error}`);
@@ -360,7 +358,6 @@ class Kernel extends EventTarget {
     const module = this.#modules.get(key);
 
     // Check if the value is available on the module
-    // @ts-expect-error
     if (typeof module?.module[valueName] === "undefined") {
       // Log the error
       this.#logger.error(`[getModuleValue] Value ${valueName} is not available on module ${moduleName}!`);
@@ -369,7 +366,6 @@ class Kernel extends EventTarget {
     }
 
     // Return the value
-    // @ts-expect-error
     return module?.module[valueName];
   }
 
@@ -400,7 +396,6 @@ class Kernel extends EventTarget {
     const module = this.#modules.get(key);
 
     // Check if the value is available on the module
-    // @ts-expect-error
     if (typeof module?.module[valueName] === "undefined") {
       // Log the error
       this.#logger.error(`[setModuleValue] Value ${valueName} is not available on module ${moduleName}!`);
@@ -412,7 +407,6 @@ class Kernel extends EventTarget {
     if (module && module.module && valueName) {
       // Log the value set
       this.#logger.debug(`[setModuleValue] Setting value ${valueName} on module ${moduleName} to ${value}`);
-      // @ts-expect-error
       module.module[valueName] = value;
     }
   }

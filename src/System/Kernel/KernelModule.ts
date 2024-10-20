@@ -233,6 +233,11 @@ abstract class KernelModule extends EventTarget {
     return this.#events;
   }
 
+  /**
+   * Allow dynamic properties.
+   */
+  [key: string]: any;
+
 }
 
 // Export the KernelModule class
