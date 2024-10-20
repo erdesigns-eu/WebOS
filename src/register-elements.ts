@@ -19,45 +19,34 @@ import { ScreenSaver } from "./Shell/Screensaver";
  */
 import { MaterialDesignIcon } from "./Helpers/MaterialDesignIcon";
 
+// Register the WebOS custom element
+customElements.define(WebOS.elementName, WebOS);
+// Register the Desktop custom element
+customElements.define(Desktop.elementName, Desktop);
+
 /**
- * The register function
- * @function registerWebOSElements
- * @description Registers the WebOS custom elements with the browser
- * @returns {void}
+ * Register the Taskbar custom elements
  */
-const registerWebOSElements = (): void => {
-  // Register the WebOS custom element
-  customElements.define(WebOS.elementName, WebOS);
-  // Register the Desktop custom element
-  customElements.define(Desktop.elementName, Desktop);
-  
-  /**
-   * Register the Taskbar custom elements
-   */
-  customElements.define(Taskbar.elementName, Taskbar);
-  customElements.define(StartButton.elementName, StartButton);
-  customElements.define(Clock.elementName, Clock);
-  customElements.define(ShowDesktop.elementName, ShowDesktop);
+customElements.define(Taskbar.elementName, Taskbar);
+customElements.define(StartButton.elementName, StartButton);
+customElements.define(Clock.elementName, Clock);
+customElements.define(ShowDesktop.elementName, ShowDesktop);
 
-  /**
-   * Register the Startmenu custom element
-   */
-  customElements.define(Startmenu.elementName, Startmenu);
-  customElements.define(StartmenuCompactMain.elementName, StartmenuCompactMain);
-  customElements.define(StartmenuCompactSide.elementName, StartmenuCompactSide);
-  customElements.define(StartmenuCompactSideButton.elementName, StartmenuCompactSideButton);
-  customElements.define(StartmenuCompactSideDivider.elementName, StartmenuCompactSideDivider);
-  
-  // Register the Brightness custom element
-  customElements.define(Brightness.elementName, Brightness);
-  // Register the Nightlight custom element
-  customElements.define(Nightlight.elementName, Nightlight);
-  // Register the ScreenSaver custom element
-  customElements.define(ScreenSaver.elementName, ScreenSaver);
+/**
+ * Register the Startmenu custom element
+ */
+customElements.define(Startmenu.elementName, Startmenu);
+customElements.define(StartmenuCompactMain.elementName, StartmenuCompactMain);
+customElements.define(StartmenuCompactSide.elementName, StartmenuCompactSide);
+customElements.define(StartmenuCompactSideButton.elementName, StartmenuCompactSideButton);
+customElements.define(StartmenuCompactSideDivider.elementName, StartmenuCompactSideDivider);
 
-  // Register the MaterialDesignIcon custom element
-  customElements.define(MaterialDesignIcon.elementName, MaterialDesignIcon);
-};
+// Register the Brightness custom element
+customElements.define(Brightness.elementName, Brightness);
+// Register the Nightlight custom element
+customElements.define(Nightlight.elementName, Nightlight);
+// Register the ScreenSaver custom element
+customElements.define(ScreenSaver.elementName, ScreenSaver);
 
-// Export the register function
-export { registerWebOSElements };
+// Register the MaterialDesignIcon custom element
+customElements.define(MaterialDesignIcon.elementName, MaterialDesignIcon);
