@@ -82,11 +82,9 @@ abstract class FilesystemFolder extends EventTarget {
       // Add the change event listener to the items
       items.forEach(item => {
         if (item instanceof FilesystemFolder) {
-          // @ts-expect-error
-          item.addEventListener("change", this.handleFolderChange.bind(this));
+          item.addEventListener("change", this.handleFolderChange.bind(this) as EventListener);
         } else if (item instanceof FilesystemFile) {
-          // @ts-expect-error
-          item.addEventListener("change", this.handleFileChange.bind(this));
+          item.addEventListener("change", this.handleFileChange.bind(this) as EventListener);
         }
       });
     }
@@ -381,7 +379,7 @@ class LocalFilesystemFolder extends FilesystemFolder {
   #password : string  = "";    // The password to unlock the folder
 
   #name     : string                                = ""; // The name of the folder
-  #items    : FilesystemFolder[] | FilesystemFile[] = []; // The items in the folder
+  #items    : (FilesystemFolder | FilesystemFile)[] = []; // The items in the folder
 
   /**
    * @constructor
@@ -644,7 +642,7 @@ class LocalFilesystemFolder extends FilesystemFolder {
     const parts = path.split("\\");
 
     // Get the folder
-    let folder: FilesystemFolder = this;
+    let folder: FilesystemFolder = this as FilesystemFolder;
     for (let i = 0; i < parts.length - 1; i++) {
       // Check if the folder exists
       if (!await folder.hasFolder(parts[i])) {
@@ -722,14 +720,11 @@ class LocalFilesystemFolder extends FilesystemFolder {
     }
     // Add the change event listener to the item
     if (item instanceof FilesystemFolder) {
-      // @ts-expect-error
-      item.addEventListener("change", this.handleFolderChange.bind(this));
+      item.addEventListener("change", this.handleFolderChange.bind(this) as EventListener);
     } else if (item instanceof FilesystemFile) {
-      // @ts-expect-error
-      item.addEventListener("change", this.handleFileChange.bind(this));
+      item.addEventListener("change", this.handleFileChange.bind(this) as EventListener);
     }
     // Add the item to the items
-    // @ts-expect-error
     this.#items.push(item);
     // Dispatch the change event
     this.dispatchEvent(new CustomEvent("change", { detail: { item: item } }));
@@ -751,15 +746,12 @@ class LocalFilesystemFolder extends FilesystemFolder {
     // Add the change event listener to the items
     items.forEach(item => {
       if (item instanceof FilesystemFolder) {
-        // @ts-expect-error
-        item.addEventListener("change", this.handleFolderChange.bind(this));
+        item.addEventListener("change", this.handleFolderChange.bind(this) as EventListener);
       } else if (item instanceof FilesystemFile) {
-        // @ts-expect-error
-        item.addEventListener("change", this.handleFileChange.bind(this));
+        item.addEventListener("change", this.handleFileChange.bind(this) as EventListener);
       }
     });
     // Add the items to the items
-    // @ts-expect-error
     this.#items.push(...items);
     // Dispatch the change event
     this.dispatchEvent(new CustomEvent("change", { detail: { items: items } }));
@@ -785,10 +777,8 @@ class LocalFilesystemFolder extends FilesystemFolder {
     // Create the folder
     const folder = new LocalFilesystemFolder(name, properties);
     // Add the change event listener to the folder
-    // @ts-expect-error
-    folder.addEventListener("change", this.handleFolderChange.bind(this));
+    folder.addEventListener("change", this.handleFolderChange.bind(this) as EventListener);
     // Add the folder to the items
-    // @ts-expect-error 
     this.#items.push(folder);
     // Dispatch the change event
     this.dispatchEvent(new CustomEvent("change", { detail: { folders: await this.getFolders() } }));
@@ -814,10 +804,8 @@ class LocalFilesystemFolder extends FilesystemFolder {
     // Create the file
     const file = new LocalFilesystemFile(name, content, properties);
     // Add the change event listener to the file
-    // @ts-expect-error
-    file.addEventListener("change", this.handleFileChange.bind(this));
+    file.addEventListener("change", this.handleFileChange.bind(this) as EventListener);
     // Add the file to the items
-    // @ts-expect-error
     this.#items.push(file);
     // Dispatch the change event
     this.dispatchEvent(new CustomEvent("change", { detail: { files: await this.getFiles() } }));

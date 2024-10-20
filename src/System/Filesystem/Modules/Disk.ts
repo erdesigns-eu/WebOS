@@ -257,11 +257,9 @@ class LocalFilesystemDisk extends FilesystemDisk {
     // Add the event listeners
     this.items.forEach((item) => {
       if (item instanceof FilesystemFolder) {
-        // @ts-expect-error
-        item.addEventListener("change", this.handleFolderChange.bind(this));
+        item.addEventListener("change", this.handleFolderChange.bind(this) as EventListener);
       } else if (item instanceof FilesystemFile) {
-        // @ts-expect-error
-        item.addEventListener("change", this.handleFileChange.bind(this));
+        item.addEventListener("change", this.handleFileChange.bind(this) as EventListener);
       }
     });
   }
@@ -566,8 +564,7 @@ class LocalFilesystemDisk extends FilesystemDisk {
     // Add the folder to the items
     this.items.push(folder);
     // Add the event listener
-    // @ts-expect-error
-    folder.addEventListener("change", this.handleFolderChange.bind(this));
+    folder.addEventListener("change", this.handleFolderChange.bind(this) as EventListener);
     // Return the folder
     return folder;
   }
@@ -577,24 +574,14 @@ class LocalFilesystemDisk extends FilesystemDisk {
    * @method getItemsInPath
    */
   async getItemsInPath(path: string) : Promise<Array<FilesystemFolder | FilesystemFile>> {
-    // Filter the items to get all the folders in the folder
-    const folders = this.items.filter(item => item instanceof FilesystemFolder);
-    // Filter the items to get all the files in the folder
-    const files = this.items.filter(item => item instanceof FilesystemFile);
-    // Return the items
-    return folders.filter(async (folder) => {
-      if (folder instanceof FilesystemFolder) {
-        const folderPath = folder.path;
-        return folderPath.localeCompare(path) === 0;
+    // Filter the items to get all the folders and files in the specified path
+    const itemsInPath = this.items.filter(item => {
+      if (item instanceof FilesystemFolder || item instanceof FilesystemFile) {
+        return item.path.localeCompare(path) === 0;
       }
       return false;
-    }).concat(files.filter(async (file) => {
-      if (file instanceof FilesystemFile) {
-        const filePath = file.path;
-        return filePath.localeCompare(path) === 0;
-      }
-      return false;
-    }));
+    });
+    return itemsInPath;
   }
 
   /**
@@ -612,8 +599,7 @@ class LocalFilesystemDisk extends FilesystemDisk {
     // Add the file to the items
     this.items.push(file);
     // Add the event listener
-    // @ts-expect-error
-    file.addEventListener("change", this.handleFileChange.bind(this));
+    file.addEventListener("change", this.handleFileChange.bind(this) as EventListener);
     // Return the file
     return file;
   }
@@ -633,8 +619,7 @@ class LocalFilesystemDisk extends FilesystemDisk {
       // Check if the folder is a FilesystemFolder
       if (folder instanceof FilesystemFolder) {
         // Remove the folder event listener
-        // @ts-expect-error
-        folder.removeEventListener("change", this.handleFolderChange.bind(this));
+        folder.removeEventListener("change", this.handleFolderChange.bind(this) as EventListener);
         // Remove the folder from the items
         this.items.splice(this.items.indexOf(folder), 1);
       } else {
@@ -660,8 +645,7 @@ class LocalFilesystemDisk extends FilesystemDisk {
       // Check if the file is a FilesystemFile
       if (file instanceof FilesystemFile) {
         // Remove the file event listener
-        // @ts-expect-error
-        file.removeEventListener("change", this.handleFileChange.bind(this));
+        file.removeEventListener("change", this.handleFileChange.bind(this) as EventListener);
         // Remove the file from the items
         this.items.splice(this.items.indexOf(file), 1);
       } else {
@@ -683,11 +667,9 @@ class LocalFilesystemDisk extends FilesystemDisk {
     // Add the event listeners
     items.forEach((item) => {
       if (item instanceof FilesystemFolder) {
-        // @ts-expect-error
-        item.addEventListener("change", this.handleFolderChange.bind(this));
+        item.addEventListener("change", this.handleFolderChange.bind(this) as EventListener);
       } else if (item instanceof FilesystemFile) {
-        // @ts-expect-error
-        item.addEventListener("change", this.handleFileChange.bind(this));
+        item.addEventListener("change", this.handleFileChange.bind(this) as EventListener);
       }
     });
   }

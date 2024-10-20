@@ -171,7 +171,7 @@ class FilesystemManager extends EventTarget {
    */
   async statistics() : Promise<any> {
     // Create the statistics object
-    let statistics = {
+    const statistics: Record<string, any> = {
       total: {
         size: 0,
         files: 0,
@@ -180,11 +180,10 @@ class FilesystemManager extends EventTarget {
       disks: {},
     };
     // Loop through the disks
-    for (let [letter, disk] of Object.entries(this.#disks)) {
+    for (const [letter, disk] of Object.entries(this.#disks)) {
       // Get the disk statistics
-      let diskStatistics = await disk.statistics();
+      const diskStatistics = await disk.statistics();
       // Add the disk statistics to the statistics object
-      // @ts-expect-error
       statistics.disks[letter] = diskStatistics;
       // Add the disk statistics to the total statistics
       statistics.total.size += diskStatistics.size;
