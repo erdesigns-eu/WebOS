@@ -20,8 +20,8 @@ web-os-taskbar {
   }
   
   background-color: var(--taskbar-background-color);
-  backdrop-filter: var(--taskbar-backdrop-filter);
   -webkit-backdrop-filter: var(--taskbar-backdrop-filter);
+  backdrop-filter: var(--taskbar-backdrop-filter);
   border-top: var(--taskbar-border-top);
   border-bottom: var(--taskbar-border-bottom);
   border-left: var(--taskbar-border-left);

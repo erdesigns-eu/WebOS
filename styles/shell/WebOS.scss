@@ -6,10 +6,13 @@
 web-os {
   display: flex;
   flex-direction: column;
-  contain: strict;
+  @supports (contain: strict) {
+    contain: strict;
+  }
   height: 100%;
   inset: 0px;
   overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
   position: fixed;
   width: 100vw;
 }

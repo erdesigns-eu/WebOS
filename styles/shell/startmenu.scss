@@ -78,6 +78,7 @@
   margin-left: var(--start-menu-margin-left);
   margin-right: var(--start-menu-margin-right);
   border-radius: var(--start-menu-border-radius);
+  -webkit-backdrop-filter: var(--start-menu-backdrop-filter);
   backdrop-filter: var(--start-menu-backdrop-filter);
   transform: translateY(calc(100% + var(--taskbar-height)));
 
