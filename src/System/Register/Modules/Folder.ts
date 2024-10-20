@@ -18,6 +18,8 @@ class RegisterFolderError extends Error {
   }
 }
 
+type RegisterFolderData = { [key: string]: RegisterRecord | RegisterFolder | any };
+
 /**
  * @class RegisterFolder
  * @description The class that represents a folder in the register
@@ -25,14 +27,14 @@ class RegisterFolderError extends Error {
  * @property keys The keys of the folder
  */
 class RegisterFolder {
-  #data: object = {};
+  #data: RegisterFolderData = {};
 
   /**
    * Creates a new RegisterFolder instance
    * @param data The data of the folder
    * @throws {RegisterFolderError} If the data is not an object
    */
-  constructor(data?: object) {
+  constructor(data?: RegisterFolderData) {
     // If the data is provided
     if (data) {
       // Make sure the data is an object
@@ -48,7 +50,6 @@ class RegisterFolder {
         }
 
         // Make sure the value is an instance of RegisterRecord or RegisterFolder
-        // @ts-expect-error
         if (!(data[key] instanceof RegisterRecord) && !(data[key] instanceof RegisterFolder)) {
           throw new RegisterFolderError("The value must be an instance of RegisterRecord or RegisterFolder!");
         }
@@ -101,11 +102,9 @@ class RegisterFolder {
     }
 
     // Add the record to the data
-    // @ts-expect-error
     this.#data[name] = new RegisterRecord(name, type, value);
 
     // Return the record
-    // @ts-expect-error
     return this.#data[name];
   }
 
@@ -121,11 +120,9 @@ class RegisterFolder {
     }
 
     // Add the folder to the data
-    // @ts-expect-error
     this.#data[name] = new RegisterFolder();
 
     // Return the folder
-    // @ts-expect-error
     return this.#data[name];
   }
 
@@ -142,19 +139,16 @@ class RegisterFolder {
     }
 
     // Make sure the record exists
-    // @ts-expect-error
     if (!this.#data[name]) {
       throw new RegisterFolderError("The record does not exist!");
     }
 
     // Make sure the record is a record
-    // @ts-expect-error
     if (this.#data[name].type === "folder") {
       throw new RegisterFolderError("The record is not a record!");
     }
 
     // Remove the record
-    // @ts-expect-error
     delete this.#data[name];
   }
 
@@ -172,19 +166,16 @@ class RegisterFolder {
     }
 
     // Make sure the folder exists
-    // @ts-expect-error
     if (!this.#data[name]) {
       throw new RegisterFolderError("The folder does not exist!");
     }
 
     // Make sure the folder is a folder
-    // @ts-expect-error
     if (this.#data[name].type !== "folder") {
       throw new RegisterFolderError("The folder is not a folder!");
     }
 
     // Remove the folder
-    // @ts-expect-error
     delete this.#data[name];
   }
 
@@ -199,19 +190,16 @@ class RegisterFolder {
     }
 
     // Make sure the record exists
-    // @ts-expect-error
     if (!this.#data[name]) {
       throw new RegisterFolderError("The record does not exist!");
     }
 
     // Make sure the record is a record
-    // @ts-expect-error
     if (this.#data[name].type === "folder") {
       throw new RegisterFolderError("The record is not a record!");
     }
 
     // Return the record
-    // @ts-expect-error
     return this.#data[name];
   }
 
@@ -229,19 +217,16 @@ class RegisterFolder {
     }
 
     // Make sure the folder exists
-    // @ts-expect-error
     if (!this.#data[name]) {
       throw new RegisterFolderError("The folder does not exist!");
     }
 
     // Make sure the folder is a folder
-    // @ts-expect-error
     if (!(this.#data[name] instanceof RegisterFolder)) {
       throw new RegisterFolderError("The folder is not a folder!");
     }
 
     // Return the folder
-    // @ts-expect-error
     return this.#data[name];
   }
 
@@ -280,7 +265,6 @@ class RegisterFolder {
    * @param name The name of the record to check
    */
   hasRecord(name: string) : boolean {
-    // @ts-expect-error
     return this.#data[name] && this.#data[name].type !== "folder";
   }
 
@@ -289,7 +273,6 @@ class RegisterFolder {
    * @param name The name of the folder to check
    */
   hasFolder(name: string) : boolean {
-    // @ts-expect-error
     return this.#data[name] && this.#data[name].type === "folder";
   }
 
@@ -297,7 +280,7 @@ class RegisterFolder {
    * Returns the data of the folder
    * @readonly
    */
-  get data() : object {
+  get data() : RegisterFolderData {
     return this.#data;
   }
 
@@ -314,7 +297,6 @@ class RegisterFolder {
    * @readonly
    */
   get folders() : string[] {
-    // @ts-expect-error
     return this.keys.filter(key => this.#data[key] instanceof RegisterFolder);
   }
 
@@ -323,7 +305,6 @@ class RegisterFolder {
    * @readonly
    */
   get records() : string[] {
-    // @ts-expect-error
     return this.keys.filter(key => this.#data[key] instanceof RegisterRecord);
   }
 
@@ -342,7 +323,6 @@ class RegisterFolder {
     // Loop through the records
     for (let i = 0; i < folder.records.length; i++) {
       // Push the record to the array
-      // @ts-expect-error
       arr.push(folder.data[i].saveToObject());
     }
     // Return the array

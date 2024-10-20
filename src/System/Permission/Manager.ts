@@ -47,12 +47,23 @@ type permissionRequestCallbackFunction = (uuid: string, module: string, func: st
  * @param data The data to pass to the onPermissionRequest callback
  * @returns Always returns true to grant the permission
  */
-// @ts-expect-error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const defaultPermissionRequestCallback: permissionRequestCallbackFunction = (uuid: string, module: string, func: string, data: any) => {
   return new Promise((resolve) => {
     resolve(true);
   });
 }
+
+/**
+ * Permissions type definition
+ * @property {string} module The module name
+ * @property {string} func The function name
+ * @property {boolean} granted True if the permission is granted, false if not
+ * @property {boolean} revoked True if the permission is revoked, false if not
+ * @property {number|null} revokedAt The timestamp when the permission was revoked, null if not revoked
+ * @property {number} grantedAt The timestamp when the permission was granted
+ */
+type Permissions = Record<string, Record<string, { granted: boolean, revoked: boolean, revokedAt: number|null, grantedAt: number|null }>>;
 
 /**
  * @class PermissionManager
@@ -63,10 +74,10 @@ const defaultPermissionRequestCallback: permissionRequestCallbackFunction = (uui
 class PermissionManager extends EventTarget {
   static #instance      : PermissionManager;
 
-  #permissions          : WeakMap<any, object>                    = new WeakMap();  // Permissions are stored in a WeakMap so that they are garbage collected when the application or service is closed
-  #permissionUUIDS      : Record<string, boolean>                 = {};             // The UUIDs of the applications and services
-  #onPermissionRequest  : permissionRequestCallbackFunction|null  = null;           // The callback to call when a permission is requested
-  #ready                : boolean                                 = false;          // The ready state of the PermissionManager instance
+  #permissions          : WeakMap<any, Permissions> = new WeakMap();       // Permissions are stored in a WeakMap so that they are garbage collected when the application or service is closed
+  #permissionUUIDS      : Record<string, symbol>                  = {};    // The UUIDs of the applications and services
+  #onPermissionRequest  : permissionRequestCallbackFunction|null  = null;  // The callback to call when a permission is requested
+  #ready                : boolean                                 = false; // The ready state of the PermissionManager instance
 
   /**
    * Creates a new PermissionManager instance
@@ -203,17 +214,14 @@ class PermissionManager extends EventTarget {
       return false;
     }
     // If there is a wildcard permission, return true
-    // @ts-expect-error
-    if (permissions[module]["*"] && permissions[module]["*"].granted) {
+    if (permissions[module]["*"]?.granted) {
       return true;
     }
     // Check if the function is set
-    // @ts-expect-error
     if (!permissions[module][func]) {
       return false;
     }
     // Return if the permission is granted
-    // @ts-expect-error
     return permissions[module][func].granted;
   }
 
@@ -294,7 +302,6 @@ class PermissionManager extends EventTarget {
       // Create the key
       const key = Symbol(uuid);
       // Set the key
-      // @ts-expect-error
       this.#permissionUUIDS[uuid] = key;
       // Set the permissions
       this.#permissions.set(key, {});
@@ -308,17 +315,13 @@ class PermissionManager extends EventTarget {
       throw new PermissionManagerError("Permissions are not set!");
     }
     // Check if the module is set
-    // @ts-expect-error
     if (! permissions[module]) {
       // Set the module
-      // @ts-expect-error
       permissions[module] = {};
     }
     // Check if the function is set
-    // @ts-expect-error
     if (!permissions[module][func]) {
       // Set the function permission object
-      // @ts-expect-error
       permissions[module][func] = {
         granted: true,
         revoked: false,
@@ -327,7 +330,6 @@ class PermissionManager extends EventTarget {
       };
     }
     // Grant the permission for the function
-    // @ts-expect-error
     permissions[module][func].granted = true;
     // Emit the permission granted event
     this.dispatchEvent(new CustomEvent("grant", { detail: { uuid, module, func } }));
@@ -349,7 +351,6 @@ class PermissionManager extends EventTarget {
       // Create the key
       const key = Symbol(uuid);
       // Set the key
-      // @ts-expect-error
       this.#permissionUUIDS[uuid] = key;
       // Set the permissions
       this.#permissions.set(key, {});
@@ -363,14 +364,11 @@ class PermissionManager extends EventTarget {
       throw new PermissionManagerError("Permissions are not set!");
     }
     // Check if the module is set
-    // @ts-expect-error
     if (!permissions[module]) {
       // Set the module
-      // @ts-expect-error
       permissions[module] = {};
     }
     // Grant the permission for all functions
-    // @ts-expect-error
     permissions[module]["*"] = {
       granted: true,
       revoked: false,
@@ -378,20 +376,15 @@ class PermissionManager extends EventTarget {
       grantedAt: Date.now(),
     };
     // Loop through all the functions
-    // @ts-expect-error
     for (const func in permissions[module]) {
       // Check if the function is the wildcard function
       if (func === "*") {
         continue;
       }
       // Grant the permission for the function
-      // @ts-expect-error
       permissions[module][func].granted = true;
-      // @ts-expect-error
       permissions[module][func].grantedAt = Date.now();
-      // @ts-expect-error
       permissions[module][func].revoked = false;
-      // @ts-expect-error
       permissions[module][func].revokedAt = null;
     }
     // Emit the permission granted event
@@ -428,33 +421,23 @@ class PermissionManager extends EventTarget {
       return;
     }
     // Check if the module is set
-    // @ts-expect-error
     if (!permissions[module]) {
       return;
     }
     // Check if the function is set
-    // @ts-expect-error
     if (!permissions[module][func]) {
       return;
     }
     // Revoke the permission for the function
-    // @ts-expect-error
     permissions[module][func].granted = false;
-    // @ts-expect-error
     permissions[module][func].revoked = true;
-    // @ts-expect-error
     permissions[module][func].revokedAt = Date.now();
     // Check if the wildcard permission is set
-    // @ts-expect-error
     if (permissions[module]["*"]) {
       // Revoke the wildcard permission
-      // @ts-expect-error
       permissions[module]["*"].granted = false;
-      // @ts-expect-error
-      permissions[module]["*"].grantAt = null;
-      // @ts-expect-error
+      permissions[module]["*"].grantedAt = null;
       permissions[module]["*"].revoked = true;
-      // @ts-expect-error
       permissions[module]["*"].revokedAt = Date.now();
     }
     // Emit the permission revoked event
@@ -482,29 +465,19 @@ class PermissionManager extends EventTarget {
     // Loop through all the modules
     for (const module in permissions) {
       // Loop through all the functions
-      // @ts-expect-error
       for (const func in permissions[module]) {
         // Revoke the permission for the function
-        // @ts-expect-error
         permissions[module][func].granted = false;
-        // @ts-expect-error
         permissions[module][func].grantedAt = null;
-        // @ts-expect-error
         permissions[module][func].revoked = true;
-        // @ts-expect-error
         permissions[module][func].revokedAt = Date.now();
       }
       // Check if the wildcard permission is set
-      // @ts-expect-error
       if (permissions[module]["*"]) {
         // Revoke the wildcard permission
-        // @ts-expect-error
         permissions[module]["*"].granted = false;
-        // @ts-expect-error
-        permissions[module]["*"].grantAt = null;
-        // @ts-expect-error
+        permissions[module]["*"].grantedAt = null;
         permissions[module]["*"].revoked = true;
-        // @ts-expect-error
         permissions[module]["*"].revokedAt = Date.now();
       }
     }
@@ -532,16 +505,11 @@ class PermissionManager extends EventTarget {
     // Loop through all the modules
     for (const module in permissions) {
       // Loop through all the functions
-      // @ts-expect-error
       for (const func in permissions[module]) {
         // Revoke the permission for the function
-        // @ts-expect-error
         permissions[module][func].granted = false;
-        // @ts-expect-error
         permissions[module][func].grantedAt = null;
-        // @ts-expect-error
         permissions[module][func].revoked = true;
-        // @ts-expect-error
         permissions[module][func].revokedAt = Date.now();
       }
     }
