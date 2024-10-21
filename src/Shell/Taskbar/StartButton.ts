@@ -53,25 +53,6 @@ class StartButton extends HTMLElement {
   }
 
   /**
-   * Updates the taskbar size
-   * @method updateTaskbarSize
-   * @description Updates the taskbar size
-   */
-  #updateTaskbarSize() {
-    // Get the taskbar element
-    const taskbar = this.taskbar;
-    // Make sure the taskbar exists
-    if (taskbar) {
-      // Make sure the taskbar size attribute is not the same as the start button size attribute
-      if (taskbar.getAttribute("size")?.localeCompare(this.size) === 0) {
-        return;
-      }
-      // Set the taskbar size
-      taskbar.setAttribute("size", this.size);
-    }
-  }
-
-  /**
    * The handleClick method
    * @method handleClick
    * @description The handleClick method handles the click event on the start button
@@ -150,7 +131,7 @@ class StartButton extends HTMLElement {
     // Handle the attribute change
     switch (name) {
       case "size":
-        this.#updateTaskbarSize();
+        // Nothing to do here.
         break;
       case "opened":
         // Nothing to do here.
