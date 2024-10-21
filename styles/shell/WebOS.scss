@@ -6,9 +6,7 @@
 web-os {
   display: flex;
   flex-direction: column;
-  @supports (contain: strict) {
-    contain: strict;
-  }
+  contain: strict;
   height: 100%;
   inset: 0px;
   overscroll-behavior: none;

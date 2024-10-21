@@ -13,9 +13,14 @@
       <web-os-desktop></web-os-desktop>
       <web-os-taskbar size="medium">
         <web-os-start-button opened="false" tooltip="Start" tooltip-position="top-left" slot="left"></web-os-start-button>
+        <web-os-taskbar-tray size="medium" slot="right">
+          <web-os-taskbar-tray-button tooltip="Wifi" tooltip-position="top-center" slot="left">
+            <web-os-mdi size="medium" mdi-style="round" mdi-icon="knob"></web-os-mdi>
+          </web-os-taskbar-tray-button>
+        </web-os-taskbar-tray>
         <web-os-taskbar-clock time-format="24h" date-format="short" slot="right" tooltip-position="top-right"></web-os-taskbar-clock>
         <web-os-taskbar-show-desktop tooltip="Show desktop" tooltip-position="top-right" slot="right">
-          <web-os-mdi mdi-style="round" mdi-icon="desk" slot="left"></web-os-mdi>
+          <web-os-mdi mdi-style="round" mdi-icon="desk"></web-os-mdi>
         </web-os-taskbar-show-desktop>
       </web-os-taskbar>
       <web-os-start-menu size="medium" menu-style="compact" opened="false"></web-os-start-menu>

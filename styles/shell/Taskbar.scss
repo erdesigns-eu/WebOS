@@ -96,6 +96,72 @@ web-os-start-button {
 }
 
 /**
+ * Tray
+ * The tray is the system tray on the taskbar.
+ * ----------------------------------------------
+ */
+web-os-taskbar-tray {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 100%;
+
+  --tray-button-width: var(--tray-button-width-medium);
+  --tray-button-border-radius: var(--tray-button-border-radius-medium);
+  --tray-button-icon-color: var(--tray-button-normal-icon-color);
+
+  &[size="small"] {
+    --tray-button-width: var(--tray-button-width-small);
+    --tray-button-border-radius: var(--tray-button-border-radius-small);
+  }
+  &[size="medium"] {
+    --tray-button-width: var(--tray-button-width-medium);
+    --tray-button-border-radius: var(--tray-button-border-radius-medium);
+  }
+  &[size="large"] {
+    --tray-button-width: var(--tray-button-width-large);
+    --tray-button-border-radius: var(--tray-button-border-radius-large);
+  }
+  &[size="xlarge"] {
+    --tray-button-width: var(--tray-button-width-xlarge);
+    --tray-button-border-radius: var(--tray-button-border-radius-xlarge);
+  }
+
+  web-os-taskbar-tray-button {
+    &:hover {
+      --tray-button-icon-color: var(--tray-button-hover-icon-color);
+      --tray-button-background-color: var(--tray-button-hover-background-color);
+    }
+    &:active {
+      --tray-button-icon-color: var(--tray-button-active-icon-color);
+      --tray-button-background-color: var(--tray-button-active-background-color);
+    }
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-radius: var(--tray-button-border-radius);
+    background-color: var(--tray-button-background-color);
+    padding-left: var(--tray-button-padding-horizontal);
+    padding-right: var(--tray-button-padding-horizontal);
+    padding-top: var(--tray-button-padding-vertical);
+    padding-bottom: var(--tray-button-padding-vertical);
+    width: var(--tray-button-width);
+    color: var(--tray-button-icon-color);
+
+    svg {
+      height: 100%;
+      margin: auto;
+  
+      & > path {
+        fill: var(--tray-button-icon-color);
+      }
+    }
+  }
+}
+
+/**
  * Clock
  * The clock is the digital clock on the taskbar.
  * ----------------------------------------------

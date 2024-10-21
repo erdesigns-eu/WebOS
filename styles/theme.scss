@@ -93,6 +93,24 @@
   --clock-border-radius: 5px;
 
   /**
+    * Taskbar Tray
+    */
+  --tray-button-width-small: 20px;
+  --tray-button-border-radius-small: 2px;
+  --tray-button-width-medium: 32px;
+  --tray-button-border-radius-medium: 3px;
+  --tray-button-width-large: 44px;
+  --tray-button-border-radius-large: 4px;
+  --tray-button-width-xlarge: 58px;
+  --tray-button-hover-icon-color: rgba(255, 255, 255, 0.9);
+  --tray-button-hover-background-color: rgba(255, 255, 255, 0.2);
+  --tray-button-active-icon-color: rgba(255, 255, 255, 0.75);
+  --tray-button-active-background-color: rgba(255, 255, 255, 0.1);
+  --tray-button-normal-icon-color: rgba(255, 255, 255, 0.6);
+  --tray-button-padding-vertical: 0px;
+  --tray-button-padding-horizontal: 5px;
+
+  /**
    * Show Desktop Button
    */
   --show-desktop-button-width-small: 24px;

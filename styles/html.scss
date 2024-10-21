@@ -40,3 +40,34 @@ html {
   height: fill-available;
   font-family: 'Roboto', sans-serif;
 }
+
+/**
+ * These styles are applied to the WebOS MDI component.
+ * ----------------------------------------------------
+ */
+web-os-mdi {
+  &[size="small"] {
+    & > svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  &[size="medium"] {
+    & > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  &[size="large"] {
+    & > svg {
+      width: 26px;
+      height: 26px;
+    }
+  }
+  &[size="xlarge"] {
+    & > svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

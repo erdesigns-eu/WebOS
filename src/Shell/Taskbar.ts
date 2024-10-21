@@ -7,6 +7,7 @@ import { SystemManager } from "../System/System";
 import { StartButton } from "./Taskbar/StartButton";
 import { Clock } from "./Taskbar/Clock";
 import { ShowDesktop } from "./Taskbar/ShowDesktop";
+import { Tray } from "./Taskbar/Tray";
 import { Startmenu } from "./Startmenu";
 
 /**
@@ -81,7 +82,7 @@ class Taskbar extends HTMLElement {
     // Append the sections to the taskbar root element
     taskbar.appendChild(leftSection);
     taskbar.appendChild(rightSection);
-    // Create 3 slots
+    // Create 2 slots
     const left   = document.createElement("slot");
     const right  = document.createElement("slot");
     // Set the slot names
@@ -175,6 +176,25 @@ class Taskbar extends HTMLElement {
   }
 
   /**
+   * Updates the tray size
+   * @method updateTraySize
+   * @description Updates the tray size attribute
+   */
+  #updateTraySize() {
+    // Get the tray element
+    const tray = this.querySelector("web-os-taskbar-tray") as Tray;
+    // Make sure the tray element exists
+    if (tray) {
+      // Make sure the tray size attribute is not the same as the taskbar size attribute
+      if (tray.getAttribute("size")?.localeCompare(this.size) === 0) {
+        return;
+      }
+      // Set the tray size
+      tray.setAttribute("size", this.size);
+    }
+  }
+
+  /**
    * The observedAttributes method
    * @method observedAttributes
    * @description The observedAttributes method returns an array of attribute names to observe
@@ -219,6 +239,7 @@ class Taskbar extends HTMLElement {
         this.#updateClockSize();
         this.#updateShowDesktopSize();
         this.#updateStartmenuSize();
+        this.#updateTraySize();
         break;
     }
   }
@@ -282,4 +303,4 @@ class Taskbar extends HTMLElement {
 }
 
 // Export the Taskbar class as a custom element
-export { Taskbar, StartButton, Clock, ShowDesktop };
+export { Taskbar, StartButton, Clock, Tray, ShowDesktop };

@@ -8,7 +8,7 @@
  */
 import { WebOS } from "./Shell/WebOS";
 import { Desktop } from "./Shell/Desktop";
-import { Taskbar, StartButton, Clock, ShowDesktop } from "./Shell/Taskbar";
+import { Taskbar, StartButton, Clock, Tray, ShowDesktop } from "./Shell/Taskbar";
 import { Startmenu, StartmenuCompactMain, StartmenuCompactSide, StartmenuCompactSideButton, StartmenuCompactSideDivider } from "./Shell/Startmenu";
 import { Brightness } from "./Shell/Overlay/Brightness";
 import { Nightlight } from "./Shell/Overlay/Nightlight";
@@ -30,6 +30,7 @@ customElements.define(Desktop.elementName, Desktop);
 customElements.define(Taskbar.elementName, Taskbar);
 customElements.define(StartButton.elementName, StartButton);
 customElements.define(Clock.elementName, Clock);
+customElements.define(Tray.elementName, Tray);
 customElements.define(ShowDesktop.elementName, ShowDesktop);
 
 /**
