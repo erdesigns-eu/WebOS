@@ -83,7 +83,7 @@ class MaterialDesignIcon extends HTMLElement {
      * @description The handleError method handles errors that occur when loading the icon SVG.
      */
     const handleError = (error?: Error) => {
-      this.innerHTML = "🚫";
+      this.innerHTML = "⚠️";
       if (error) {
         console.error(error);
       } else {
